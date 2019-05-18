@@ -1,5 +1,6 @@
 package com.example.bit.Core.Entities;
 
+import com.example.bit.Core.Enums.Status;
 import com.example.bit.DAL.Helpers.Annotations.SqliteNotNull;
 import com.example.bit.DAL.Helpers.Annotations.SqlitePrimaryKey;
 import com.example.bit.DAL.Helpers.Annotations.SqliteTableName;
