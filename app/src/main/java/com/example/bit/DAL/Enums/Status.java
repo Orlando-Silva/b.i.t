@@ -1,4 +1,4 @@
-package com.example.bit.Core.Enums;
+package com.example.bit.DAL.Enums;
 
 public enum Status {
     INACTIVE(0),

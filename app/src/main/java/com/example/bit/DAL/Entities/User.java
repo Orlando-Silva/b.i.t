@@ -1,43 +1,53 @@
-package com.example.bit.Core.Entities;
+package com.example.bit.DAL.Entities;
 
-import com.example.bit.Core.Enums.Status;
-import com.example.bit.DAL.Helpers.Annotations.SqliteNotNull;
-import com.example.bit.DAL.Helpers.Annotations.SqlitePrimaryKey;
-import com.example.bit.DAL.Helpers.Annotations.SqliteTableName;
-import com.example.bit.DAL.Helpers.Interfaces.SqliteGenericObject;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
-import java.io.Serializable;
+import com.example.bit.DAL.Enums.Status;
+import com.example.bit.DAL.Helpers.DateConverter;
+import com.example.bit.DAL.Helpers.EnumConverter;
+
 import java.util.Date;
 
-@SqliteTableName("Users")
-public class User  implements SqliteGenericObject, Serializable {
+@Entity(tableName = "Users")
+public class User {
 
-    @SqlitePrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "Id")
     private int id;
 
-    @SqliteNotNull
+    @NonNull
+    @ColumnInfo(name = "Name")
     private String name;
 
-    @SqliteNotNull
+
+    @NonNull
+    @ColumnInfo(name = "Email")
     private String email;
 
-    @SqliteNotNull
+    @NonNull
+    @ColumnInfo(name = "Login")
     private String login;
 
-    @SqliteNotNull
+    @NonNull
+    @ColumnInfo(name = "Password")
     private String password;
 
-    @SqliteNotNull
+    @NonNull
+    @ColumnInfo(name = "CreatedAt")
+    @TypeConverters({DateConverter.class})
     private Date createdAt;
 
-    @SqliteNotNull
+    @NonNull
+    @ColumnInfo(name = "Status")
+    @TypeConverters({EnumConverter.class})
     private Status status;
 
-    public User() {
-        
-    }
-
-    public User(int id, String name, String email, String login, String password, Date createdAt, Status status) {
+    public User(int id, @NonNull String name, @NonNull String email, @NonNull String login, @NonNull String password, @NonNull Date createdAt, @NonNull Status status) {
         this.id = id;
         this.name = name;
         this.email = email;

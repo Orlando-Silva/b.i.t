@@ -1,19 +1,27 @@
 package com.example.bit.DAL.Repositories;
 
-import android.content.Context;
-import com.example.bit.Core.Entities.User;
+import android.app.Application;
 
-public class UserRepository extends Repository<User> {
+import com.example.bit.DAL.BitRoomDatabase;
+import com.example.bit.DAL.DAO.UserDao;
+import com.example.bit.DAL.Entities.User;
 
-    public UserRepository(Context context) {
-        super(context);
+public class UserRepository implements com.example.bit.DAL.Repositories.Interfaces.UserRepository {
+
+    private UserDao mUserDao;
+
+    public UserRepository(Application application) {
+        BitRoomDatabase db = BitRoomDatabase.getInstance(application);
+        mUserDao = db.userDao();
     }
 
-    public User getById(int id) {
-        User wrapper = new User();
-        wrapper.setId(id);
-
-        return queryById(wrapper);
+    @Override
+    public void insert(User user) {
+        mUserDao.insert(user);
     }
 
+    @Override
+    public User get(int id) {
+        return mUserDao.get(id);
+    }
 }
