@@ -1,8 +1,8 @@
 package com.example.bit.DAL.Helpers;
 
-import android.arch.persistence.room.TypeConverter;
-
 import com.example.bit.DAL.Enums.Status;
+
+import androidx.room.TypeConverter;
 
 public class EnumConverter {
 

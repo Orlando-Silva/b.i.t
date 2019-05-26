@@ -1,16 +1,17 @@
 package com.example.bit.DAL.Entities;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.NonNull;
 
 import com.example.bit.DAL.Enums.Status;
 import com.example.bit.DAL.Helpers.DateConverter;
 import com.example.bit.DAL.Helpers.EnumConverter;
 
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 @Entity(tableName = "Users")
 public class User {

@@ -4,13 +4,15 @@
     package="com.example.bit">
 
     <application
-        tools:node="replace"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher2"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_round2"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:node="replace">
+        <activity android:name=".View.RegisterUserActivity"></activity>
+        <activity android:name=".View.RegisterUser" />
         <activity android:name=".View.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

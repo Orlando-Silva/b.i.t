@@ -1,8 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".View.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="50dp"
+                android:src="@drawable/bitcoinlogo"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="40dp"
+                android:hint="@string/hint_username"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="45dp"
+                android:inputType="textPassword"
+                android:hint="@string/hint_password"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/registerUserButton"
+                    android:layout_width="match_parent"
+                    android:onClick="registerUser"
+                    android:textAlignment="textEnd"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/design_default_color_surface"
+                    android:text="@string/msg_newUser"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_margin="64dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button"
+                android:textColor="@color/design_default_color_on_primary"
+                android:text="@string/btn_login" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
+

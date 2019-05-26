@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">B.I.T</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="msg_login">Seja Bem vindo ao B.I.T</string>
+    <string name="hint_username">Digite seu login</string>
+    <string name="hint_password">Digite sua senha</string>
+    <string name="msg_newUser">Não tem um login? Clique aqui</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>
