@@ -9,7 +9,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {User.class}, version = 1,exportSchema = false)
+@Database(entities = {User.class}, version = 2,exportSchema = false)
 public abstract class BitRoomDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
@@ -23,6 +23,7 @@ public abstract class BitRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BitRoomDatabase.class, "BIT.db")
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

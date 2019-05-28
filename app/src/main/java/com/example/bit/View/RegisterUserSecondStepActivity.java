@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.bit.DAL.Entities.User;
+import com.example.bit.DAL.Repositories.UserRepository;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
 import com.example.bit.databinding.ActivityRegisterUserSecondStepBinding;
@@ -17,11 +18,13 @@ public class RegisterUserSecondStepActivity extends AppCompatActivity {
 
     ActivityRegisterUserSecondStepBinding bindingContent;
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_register_user_second_step);
-        User user = (User) getIntent().getSerializableExtra("User");
+        user = (User) getIntent().getSerializableExtra("User");
         bindingContent.btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,7 +36,11 @@ public class RegisterUserSecondStepActivity extends AppCompatActivity {
 
     private void btnContinue_click(View v) {
         if(argsIsValid()) {
-
+            UserRepository userRepository = new UserRepository(getApplication());
+            user = userRepository.insertUser(user, bindingContent.tvPassword.getEditText().getText().toString());
+            Intent i = new Intent(RegisterUserSecondStepActivity.this, HomeActivity.class);
+            i.putExtra("User", user);
+            startActivity(i);
         }
     }
 

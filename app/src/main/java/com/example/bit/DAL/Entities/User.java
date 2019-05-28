@@ -2,11 +2,9 @@ package com.example.bit.DAL.Entities;
 
 
 import com.example.bit.DAL.Enums.Status;
-import com.example.bit.DAL.Helpers.DateConverter;
 import com.example.bit.DAL.Helpers.EnumConverter;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -38,12 +36,7 @@ public class User implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "Password")
-    private String password;
-
-    @NonNull
-    @ColumnInfo(name = "CreatedAt")
-    @TypeConverters({DateConverter.class})
-    private Date createdAt;
+    private byte[] password;
 
     @NonNull
     @ColumnInfo(name = "Status")
@@ -55,13 +48,12 @@ public class User implements Serializable {
     }
 
     @Ignore
-    public User(int id, @NonNull String name, @NonNull String email, @NonNull String login, @NonNull String password, @NonNull Date createdAt, @NonNull Status status) {
+    public User(int id, @NonNull String name, @NonNull String email, @NonNull String login, @NonNull byte[] password, @NonNull Status status) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.login = login;
         this.password = password;
-        this.createdAt = createdAt;
         this.status = status;
     }
 
@@ -97,20 +89,12 @@ public class User implements Serializable {
         this.login = login;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Status getStatus() {

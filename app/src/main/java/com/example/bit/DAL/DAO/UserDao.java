@@ -25,4 +25,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM Users ORDER BY ID DESC")
     List<User> getAllUsers();
+
+    @Query("SELECT * FROM Users WHERE Login = :login AND Password = :password LIMIT 1")
+    User getByLoginAndPassword(String login, byte[] password);
 }

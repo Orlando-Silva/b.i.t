@@ -21,6 +21,7 @@
     <string name="hint_newpassword">Digite sua senha</string>
     <string name="hint_newpasswordConfirmation">Confirme a sua senha</string>
     <string name="btn_confirmAccount">CONFIRMAR</string>
+    <string name="title_activity_home">HomeActivity</string>
 
 
 </resources>
