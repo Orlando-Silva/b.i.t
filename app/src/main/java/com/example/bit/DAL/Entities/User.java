@@ -5,16 +5,18 @@ import com.example.bit.DAL.Enums.Status;
 import com.example.bit.DAL.Helpers.DateConverter;
 import com.example.bit.DAL.Helpers.EnumConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 @Entity(tableName = "Users")
-public class User {
+public class User implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -48,6 +50,11 @@ public class User {
     @TypeConverters({EnumConverter.class})
     private Status status;
 
+    public User() {
+
+    }
+
+    @Ignore
     public User(int id, @NonNull String name, @NonNull String email, @NonNull String login, @NonNull String password, @NonNull Date createdAt, @NonNull Status status) {
         this.id = id;
         this.name = name;

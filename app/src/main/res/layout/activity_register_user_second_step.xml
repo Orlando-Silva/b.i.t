@@ -9,7 +9,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -23,65 +23,64 @@
 
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            android:layout_weight="2">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tvPassword"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="40dp"
-                android:hint="@string/hint_username"
-                android:layout_weight="1">
+                android:layout_height="80dp"
+                android:layout_margin="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:hint="@string/hint_newpassword">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:inputType="textPassword"
                     android:layout_height="wrap_content"
+
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tvConfirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="45dp"
-                android:hint="@string/hint_password"
-                android:layout_weight="1">
+                android:layout_height="80dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+
+                android:hint="@string/hint_newpasswordConfirmation">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:inputType="textPassword"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/registerUserButton"
-                    android:layout_width="match_parent"
-                    android:onClick="registerUser"
-                    android:textAlignment="textEnd"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/design_default_color_surface"
-                    android:text="@string/msg_newUser"/>
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
-                android:layout_margin="64dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:id="@+id/btnContinue"
                 style="@style/Widget.MaterialComponents.Button"
-                android:textColor="@color/design_default_color_on_primary"
-                android:text="@string/btn_login" />
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="38dp"
+                android:layout_weight="1"
+                android:text="@string/btn_confirmAccount"
+                android:textColor="@color/design_default_color_on_primary" />
 
 
         </LinearLayout>
@@ -89,4 +88,3 @@
     </LinearLayout>
 
 </layout>
-

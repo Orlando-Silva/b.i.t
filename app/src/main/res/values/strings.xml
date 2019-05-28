@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- Login -->
     <string name="app_name">B.I.T</string>
     <string name="btn_login">LOGIN</string>
     <string name="msg_login">Seja Bem vindo ao B.I.T</string>
@@ -6,8 +8,19 @@
     <string name="hint_password">Digite sua senha</string>
     <string name="msg_newUser">Não tem um login? Clique aqui</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Register Common -->
+    <string name="card_createAccount">NOVA CONTA</string>
+    <string name="btn_nextStep">CONTINUAR</string>
+
+    <!-- Register - First Step -->
+    <string name="hint_newname">Digite seu nome</string>
+    <string name="hint_newemail">Digite seu email</string>
+    <string name="hint_newlogin">Digite seu login</string>
+
+    <!-- Register - Second Step -->
+    <string name="hint_newpassword">Digite sua senha</string>
+    <string name="hint_newpasswordConfirmation">Confirme a sua senha</string>
+    <string name="btn_confirmAccount">CONFIRMAR</string>
 
 
 </resources>
