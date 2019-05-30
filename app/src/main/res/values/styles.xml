@@ -1,5 +1,5 @@
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.Bridge">
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
 
     </style>
 </resources>
