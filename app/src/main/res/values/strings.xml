@@ -23,4 +23,13 @@
     <string name="btn_confirmAccount">CONFIRMAR</string>
     <string name="title_activity_home">HomeActivity</string>
 
+    <!-- Menu -->
+    <string name="edit_account">Editar conta</string>
+    <string name="configurations">Configurações</string>
+
+    <!-- Home -->
+    <string name="home_deposit">Depósitos</string>
+    <string name="home_withdraw">Retiradas</string>
+
+
 </resources>

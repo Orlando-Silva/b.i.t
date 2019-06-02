@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/settingsIcon"
+        android:title=""
         android:icon="@drawable/settingsicon"
-        app:actionViewClass="android.widget.Spinner"
-        app:showAsAction="never"
-        android:title="">
+        android:orderInCategory="101"
+        app:showAsAction="always">
 
+        <menu>
+
+            <item android:id="@+id/action_editAccount"
+                app:showAsAction="ifRoom"
+                android:title="@string/edit_account" />
+
+            <item android:id="@+id/action_configurations"
+                app:showAsAction="ifRoom"
+                android:title="@string/configurations" />
+
+        </menu>
 
     </item>
 
