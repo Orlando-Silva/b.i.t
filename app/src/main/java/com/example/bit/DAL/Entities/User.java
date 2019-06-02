@@ -5,12 +5,14 @@ import com.example.bit.DAL.Enums.Status;
 import com.example.bit.DAL.Helpers.EnumConverter;
 
 import java.io.Serializable;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 import androidx.room.TypeConverters;
 
 @Entity(tableName = "Users")
@@ -42,6 +44,9 @@ public class User implements Serializable {
     @ColumnInfo(name = "Status")
     @TypeConverters({EnumConverter.class})
     private Status status;
+
+    @Relation(parentColumn = "Id", entityColumn = "UserId", entity = Address.class)
+    private List<Address> addresses;
 
     public User() {
 
@@ -105,4 +110,11 @@ public class User implements Serializable {
         this.status = status;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bit">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity android:name=".Toolbar_main"></activity>
+        <activity
+            android:name=".View.DepositActivity"
+            android:label="@string/title_activity_deposits"></activity>
         <activity
             android:name=".View.HomeActivity"
             android:label="@string/title_activity_home" />
