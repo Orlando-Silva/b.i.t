@@ -41,6 +41,7 @@ public class RegisterUserSecondStepActivity extends AppCompatActivity {
             Intent i = new Intent(RegisterUserSecondStepActivity.this, HomeActivity.class);
             i.putExtra("User", user);
             startActivity(i);
+            finish();
         }
     }
 

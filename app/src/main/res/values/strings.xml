@@ -30,6 +30,7 @@
     <!-- Home -->
     <string name="home_deposit">Depósitos</string>
     <string name="home_withdraw">Retiradas</string>
+    <string name="home_home">Home</string>
     <string name="title_activity_deposits">deposits</string>
 
 

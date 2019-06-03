@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, HomeActivity.class);
                 i.putExtra("User", user);
                 startActivity(i);
+                finish();
             }
             else {
                 showMaterialMessage("Aviso", "Login ou senha errado!");

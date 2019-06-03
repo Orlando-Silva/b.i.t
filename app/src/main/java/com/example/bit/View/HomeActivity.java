@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent i = new Intent(HomeActivity.this, DepositActivity.class);
         i.putExtra("User", user);
         startActivity(i);
+        finish();
     }
 
     @Override

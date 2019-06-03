@@ -1,7 +1,6 @@
 package com.example.bit.DAL.Repositories;
 
 import android.app.Application;
-import android.util.Pair;
 
 import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.AddressDao;
@@ -40,7 +39,8 @@ public class AddressRepository {
 
     public Address generateFirstAddress(int userId) throws Exception {
         if(!userHasAddress(userId)) {
-            BlockcypherCreateAddressResponse response =  HttpHelpers.makePostRequest(" https://api.blockcypher.com/v1/btc/test3/addrs", null, new BlockcypherCreateAddressResponse().getClass());
+            BlockcypherCreateAddressResponse response =  HttpHelpers.makePostRequest(" https://api.blockcypher.com/v1/btc/test3/addrs",
+                    null, new BlockcypherCreateAddressResponse().getClass());
 
             if(response == null) {
                 throw new Exception("Erro de conexão, não foi possível criar um endereço novo");
@@ -57,5 +57,11 @@ public class AddressRepository {
             throw new Exception("Usuário já tem um endereço");
         }
     }
+
+    public Address addLabelToAddress(int addressId, String label) {
+        mAddressDao.addLabelToAddress(addressId, label);
+        return mAddressDao.get(addressId);
+    }
+
 
 }
