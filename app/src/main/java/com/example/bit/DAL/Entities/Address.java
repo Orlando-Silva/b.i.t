@@ -30,7 +30,6 @@ public class Address {
     @ColumnInfo(name = "PrivateKey")
     private String privateKey;
 
-    @NonNull
     @ColumnInfo(name = "Label")
     private String label;
 

@@ -45,9 +45,6 @@ public class User implements Serializable {
     @TypeConverters({EnumConverter.class})
     private Status status;
 
-    @Relation(parentColumn = "Id", entityColumn = "UserId", entity = Address.class)
-    private List<Address> addresses;
-
     public User() {
 
     }
@@ -110,11 +107,4 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
 }

@@ -1,8 +1,10 @@
 package com.example.bit.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.R;
@@ -27,6 +29,19 @@ public class HomeActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         bindingContent.response.setText("Olá " + user.getName() + "!");
+
+        bindingContent.depositsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Deposits(v);
+            }
+        });
+    }
+
+    public void Deposits(View view) {
+        Intent i = new Intent(HomeActivity.this, DepositActivity.class);
+        i.putExtra("User", user);
+        startActivity(i);
     }
 
     @Override

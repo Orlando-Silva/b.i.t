@@ -1,6 +1,7 @@
 package com.example.bit.Helpers;
 
 
+import android.os.StrictMode;
 import android.util.Pair;
 
 import java.io.BufferedReader;
@@ -31,10 +32,14 @@ public class HttpHelpers {
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
 
-    public static <T, P, K> T makePostRequest(String urlTo, List<Pair<P, K>> parameters) {
+    public static <T, P, K> T makePostRequest(String urlTo, List<Pair<P, K>> parameters, Class<T> clazz) {
         String inputLine;
 
         try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
             //Create a URL object holding our url
             URL url = new URL(urlTo);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -47,7 +52,10 @@ public class HttpHelpers {
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getQuery(parameters));
+
+            if(parameters != null) {
+                writer.write(getQuery(parameters));
+            }
             writer.flush();
             writer.close();
             os.close();
@@ -69,8 +77,7 @@ public class HttpHelpers {
 
             String stringResult = stringBuilder.toString();
 
-            Type type = new TypeToken<T>() { }.getType();
-            return new GsonBuilder().create().fromJson(stringResult,type);
+            return new GsonBuilder().create().fromJson(stringResult, clazz);
         }
         catch (ProtocolException e) {
 
