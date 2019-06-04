@@ -39,23 +39,29 @@ public class AddressRepository {
 
     public Address generateFirstAddress(int userId) throws Exception {
         if(!userHasAddress(userId)) {
-            BlockcypherCreateAddressResponse response =  HttpHelpers.makePostRequest(" https://api.blockcypher.com/v1/btc/test3/addrs",
-                    null, new BlockcypherCreateAddressResponse().getClass());
-
-            if(response == null) {
-                throw new Exception("Erro de conexão, não foi possível criar um endereço novo");
-            } else {
-                Address address = new Address();
-                address.setPrivateKey(response.get_private());
-                address.setPublicKey(response.get_public());
-                address.setStatus(Status.ACTIVE);
-                address.setUserId(userId);
-                mAddressDao.insert(address);
-                return address;
-            }
-        } else {
+            return generateAddress(userId);
+        }
+        else {
             throw new Exception("Usuário já tem um endereço");
         }
+    }
+
+    public Address generateAddress(int userId) throws Exception {
+        BlockcypherCreateAddressResponse response =  HttpHelpers.makePostRequest(" https://api.blockcypher.com/v1/btc/test3/addrs",
+                null, new BlockcypherCreateAddressResponse().getClass());
+
+        if(response == null) {
+            throw new Exception("Erro de conexão, não foi possível criar um endereço novo");
+        } else {
+            Address address = new Address();
+            address.setPrivateKey(response.get_private());
+            address.setPublicKey(response.get_public());
+            address.setStatus(Status.ACTIVE);
+            address.setUserId(userId);
+            mAddressDao.insert(address);
+            return address;
+        }
+
     }
 
     public Address addLabelToAddress(int addressId, String label) {

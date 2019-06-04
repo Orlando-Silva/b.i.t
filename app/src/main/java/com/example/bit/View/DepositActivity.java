@@ -1,5 +1,6 @@
 package com.example.bit.View;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -13,6 +14,7 @@ import com.example.bit.DAL.Repositories.AddressRepository;
 import com.example.bit.R;
 import com.example.bit.View.RecycleViewAdapters.AddressesRecycleViewAdapter;
 import com.example.bit.databinding.ActivityDepositsBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
 import java.util.List;
@@ -46,6 +48,8 @@ public class DepositActivity extends AppCompatActivity {
         setSupportActionBar(bindingContent.homeToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
+
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
@@ -54,8 +58,47 @@ public class DepositActivity extends AppCompatActivity {
 
         List<Address> addresses = addressRepository.getAllByUser(user.getId());
 
+        if(addresses.isEmpty()) {
+            try {
+                addressRepository.generateFirstAddress(user.getId());
+                Intent i = new Intent(DepositActivity.this, DepositActivity.class);
+                i.putExtra("User", user);
+                startActivity(i);
+                finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         mAdapter = new AddressesRecycleViewAdapter(addresses);
         recyclerView.setAdapter(mAdapter);
+
+        bindingContent.btnNewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    addressRepository.generateAddress(user.getId());
+                    new MaterialAlertDialogBuilder(v.getContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
+                            .setTitle("Aviso")
+                            .setMessage("Novo endereço gerado com sucesso!")
+                            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent i = new Intent(DepositActivity.this, DepositActivity.class);
+                                    i.putExtra("User", user);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            })
+                            .create()
+                            .show();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         bindingContent.homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +106,6 @@ public class DepositActivity extends AppCompatActivity {
                 Home(v);
             }
         });
-
 
         bindingContent.depositsButton.setOnClickListener(new View.OnClickListener() {
             @Override

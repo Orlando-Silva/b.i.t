@@ -2,6 +2,7 @@ package com.example.bit.View.RecycleViewAdapters;
 
 import android.app.Application;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Repositories.AddressRepository;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
+import com.example.bit.View.DepositActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import net.glxn.qrgen.android.QRCode;

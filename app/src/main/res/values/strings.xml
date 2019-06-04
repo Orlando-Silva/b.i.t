@@ -32,6 +32,7 @@
     <string name="home_deposit">Depósitos</string>
     <string name="home_withdraw">Retiradas</string>
     <string name="home_home">Home</string>
+    <string name="deposits_newAddress">Novo endereço</string>
     <string name="title_activity_deposits">deposits</string>
     <string name="title_activity_edit_user">EditUserActivity</string>
 

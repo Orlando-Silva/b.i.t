@@ -13,17 +13,33 @@
             android:background="@color/design_default_color_secondary"
             android:layout_height="?attr/actionBarSize" />
 
+
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNewAddress"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="100dp"
+                android:layout_weight="1"
+                android:text="@string/deposits_newAddress"
+                android:textColor="@color/design_default_color_on_primary" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/addresses_recycleView"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"
+                android:layout_weight="10"/>
 
 
 
