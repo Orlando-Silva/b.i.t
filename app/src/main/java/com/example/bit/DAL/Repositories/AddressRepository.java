@@ -55,6 +55,7 @@ public class AddressRepository {
         } else {
             Address address = new Address();
             address.setPrivateKey(response.get_private());
+            address.setPublicAddress(response.get_address());
             address.setPublicKey(response.get_public());
             address.setStatus(Status.ACTIVE);
             address.setUserId(userId);

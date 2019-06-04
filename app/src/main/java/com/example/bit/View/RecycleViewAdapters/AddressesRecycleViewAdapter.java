@@ -1,6 +1,7 @@
 package com.example.bit.View.RecycleViewAdapters;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -57,8 +58,8 @@ public class  AddressesRecycleViewAdapter extends RecyclerView.Adapter<Addresses
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.textView.setText(mDataset.get(position).getPublicKey());
-        Bitmap myBitmap = QRCode.from(mDataset.get(position).getPublicKey()).bitmap();
+        holder.textView.setText(mDataset.get(position).getPublicAddress());
+        Bitmap myBitmap = QRCode.from(mDataset.get(position).getPublicAddress()).bitmap();
         holder.imageView.setImageBitmap(myBitmap);
 
         final int addressId = mDataset.get(position).getId();
@@ -89,6 +90,7 @@ public class  AddressesRecycleViewAdapter extends RecyclerView.Adapter<Addresses
                                         : null;
 
                                 new AddressRepository(application).addLabelToAddress(addressId, label);
+
                             }
                         })
                         .setNegativeButton("Cancelar", null)

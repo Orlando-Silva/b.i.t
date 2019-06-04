@@ -46,9 +46,8 @@ public class DepositActivity extends AppCompatActivity {
 
 
         setSupportActionBar(bindingContent.homeToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
+        setTitle("Depósitos");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView.setHasFixedSize(true);
 
@@ -158,6 +157,9 @@ public class DepositActivity extends AppCompatActivity {
                 break;
             case R.id.action_logout:
                 Logout();
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
         }
         return super.onOptionsItemSelected(item);

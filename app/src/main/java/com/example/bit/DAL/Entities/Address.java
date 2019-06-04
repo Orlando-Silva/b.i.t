@@ -23,6 +23,10 @@ public class Address {
     private int id;
 
     @NonNull
+    @ColumnInfo(name = "publicAddress")
+    private String publicAddress;
+
+    @NonNull
     @ColumnInfo(name = "PublicKey")
     private String publicKey;
 
@@ -51,6 +55,15 @@ public class Address {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @NonNull
+    public String getPublicAddress() {
+        return publicAddress;
+    }
+
+    public void setPublicAddress(@NonNull String publicAddress) {
+        this.publicAddress = publicAddress;
     }
 
     @NonNull

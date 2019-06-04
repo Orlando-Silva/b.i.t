@@ -1,11 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="400dp">
+    android:layout_height="350dp">
 
 
     <ImageView
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
         android:layout_width="match_parent"
@@ -17,24 +16,24 @@
         android:layout_weight="0.5"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/addressLabel"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_surface"
-        android:textSize="10dp"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
 
     <TextView
         android:layout_weight="0.5"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:id="@+id/addressPublicKey"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_surface"
-        android:textSize="10dp"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 

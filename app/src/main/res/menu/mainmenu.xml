@@ -2,12 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
     <item
         android:id="@+id/settingsIcon"
-        android:title=""
         android:icon="@drawable/settingsicon"
-        android:orderInCategory="101"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        android:title="Configurations">
 
         <menu>
 

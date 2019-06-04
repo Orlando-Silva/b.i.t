@@ -25,7 +25,9 @@ public class HomeActivity extends AppCompatActivity {
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
         setSupportActionBar(bindingContent.homeToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setTitle("Página inicial");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         user = (User) getIntent().getSerializableExtra("User");
         bindingContent.response.setText("Olá " + user.getName() + "!");
@@ -76,6 +78,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.action_logout:
                 Logout();
                 break;
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
         }
         return super.onOptionsItemSelected(item);
