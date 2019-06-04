@@ -24,6 +24,8 @@ public class UserRepository {
         mUserDao.insert(user);
     }
 
+    public void update(User user) { mUserDao.update(user); }
+
     public User get(int id) {
         return mUserDao.get(id);
     }

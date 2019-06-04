@@ -45,6 +45,18 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
+    public void EditUser() {
+        Intent i = new Intent(HomeActivity.this, EditUserActivity.class);
+        i.putExtra("User", user);
+        startActivity(i);
+    }
+
+    public void Logout() {
+        Intent i = new Intent(HomeActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainmenu, menu);
@@ -57,8 +69,12 @@ public class HomeActivity extends AppCompatActivity {
 
         switch (id)  {
             case R.id.action_editAccount:
+                EditUser();
                 break;
             case R.id.action_configurations:
+                break;
+            case R.id.action_logout:
+                Logout();
                 break;
             default:
         }

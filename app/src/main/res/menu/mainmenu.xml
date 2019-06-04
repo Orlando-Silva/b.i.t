@@ -19,10 +19,12 @@
                 app:showAsAction="ifRoom"
                 android:title="@string/configurations" />
 
+            <item android:id="@+id/action_logout"
+                app:showAsAction="ifRoom"
+                android:title="@string/logout" />
+
         </menu>
 
     </item>
-
-
 
 </menu>

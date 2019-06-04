@@ -7,12 +7,16 @@ import java.util.List;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface UserDao {
 
     @Insert
     void insert(User user);
+
+    @Update
+    void update(User user);
 
     @Query("DELETE FROM Users WHERE ID = :id")
     void delete(int id);
@@ -28,4 +32,6 @@ public interface UserDao {
 
     @Query("SELECT * FROM Users WHERE Login = :login AND Password = :password LIMIT 1")
     User getByLoginAndPassword(String login, byte[] password);
+
+
 }

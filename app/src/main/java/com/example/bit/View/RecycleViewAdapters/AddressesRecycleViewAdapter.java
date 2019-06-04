@@ -73,10 +73,6 @@ public class  AddressesRecycleViewAdapter extends RecyclerView.Adapter<Addresses
 
                 final EditText edittext = new EditText(v.getContext());
 
-                final String label = !StringHelpers.isNullEmptyOrWhitespace(edittext.getText().toString())
-                        ? edittext.getText().toString()
-                        : null;
-
                 final Application application = (Application) v.getContext().getApplicationContext();
 
                 new MaterialAlertDialogBuilder(v.getContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
@@ -85,6 +81,11 @@ public class  AddressesRecycleViewAdapter extends RecyclerView.Adapter<Addresses
                         .setPositiveButton(addressHasLabel ? "Adicionar" : "Alterar" + " identificador", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
+                                final String label = !StringHelpers.isNullEmptyOrWhitespace(edittext.getText().toString())
+                                        ? edittext.getText().toString()
+                                        : null;
+
                                 new AddressRepository(application).addLabelToAddress(addressId, label);
                             }
                         })

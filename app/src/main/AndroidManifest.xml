@@ -4,6 +4,7 @@
     package="com.example.bit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +14,11 @@
         android:theme="@style/AppTheme"
         tools:node="replace">
         <activity
+            android:name=".View.EditUserActivity"
+            android:label="@string/title_activity_edit_user"></activity>
+        <activity
             android:name=".View.DepositActivity"
-            android:label="@string/title_activity_deposits"></activity>
+            android:label="@string/title_activity_deposits" />
         <activity
             android:name=".View.HomeActivity"
             android:label="@string/title_activity_home" />

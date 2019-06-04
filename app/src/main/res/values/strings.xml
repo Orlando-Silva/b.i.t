@@ -26,12 +26,14 @@
     <!-- Menu -->
     <string name="edit_account">Editar conta</string>
     <string name="configurations">Configurações</string>
+    <string name="logout">Log Out</string>
 
     <!-- Home -->
     <string name="home_deposit">Depósitos</string>
     <string name="home_withdraw">Retiradas</string>
     <string name="home_home">Home</string>
     <string name="title_activity_deposits">deposits</string>
+    <string name="title_activity_edit_user">EditUserActivity</string>
 
 
 </resources>
