@@ -2,6 +2,7 @@ package com.example.bit.Helpers;
 
 
 import android.os.StrictMode;
+import android.util.Log;
 import android.util.Pair;
 
 import java.io.BufferedReader;
@@ -25,6 +26,8 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 
 public class HttpHelpers {
 
@@ -80,15 +83,15 @@ public class HttpHelpers {
             return new GsonBuilder().create().fromJson(stringResult, clazz);
         }
         catch (ProtocolException e) {
-
+            Log.d("url", urlTo);
             e.printStackTrace();
 
         } catch (MalformedURLException e) {
-
+            Log.d("url", urlTo);
             e.printStackTrace();
 
         } catch (IOException e) {
-
+            Log.d("url", urlTo);
             e.printStackTrace();
 
         }
@@ -116,7 +119,7 @@ public class HttpHelpers {
         return result.toString();
     }
 
-    public static <T> T makeGetRequest(String url)
+    public static <T> T makeGetRequest(String url, Class<T> clazz)
     {
 
         String inputLine;
@@ -148,8 +151,8 @@ public class HttpHelpers {
             streamReader.close();
 
             String stringResult = stringBuilder.toString();
-            Type type = new TypeToken<T>() { }.getType();
-            return new GsonBuilder().create().fromJson(stringResult,type);
+            return new GsonBuilder().create().fromJson(stringResult, clazz);
+
         }
         catch (ProtocolException e) {
 

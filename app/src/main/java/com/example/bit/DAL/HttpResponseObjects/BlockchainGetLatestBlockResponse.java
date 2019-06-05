@@ -13,16 +13,16 @@ public class BlockchainGetLatestBlockResponse {
     private String hash;
     @SerializedName("time")
     @Expose
-    private Integer time;
+    private Long time;
     @SerializedName("block_index")
     @Expose
-    private Integer blockIndex;
+    private Long blockIndex;
     @SerializedName("height")
     @Expose
-    private Integer height;
+    private Long height;
     @SerializedName("txIndexes")
     @Expose
-    private List<Integer> txIndexes = null;
+    private List<Long> txIndexes = null;
 
     public String getHash() {
         return hash;
@@ -32,35 +32,35 @@ public class BlockchainGetLatestBlockResponse {
         this.hash = hash;
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
-    public Integer getBlockIndex() {
+    public Long getBlockIndex() {
         return blockIndex;
     }
 
-    public void setBlockIndex(Integer blockIndex) {
+    public void setBlockIndex(Long blockIndex) {
         this.blockIndex = blockIndex;
     }
 
-    public Integer getHeight() {
+    public Long getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Long height) {
         this.height = height;
     }
 
-    public List<Integer> getTxIndexes() {
+    public List<Long> getTxIndexes() {
         return txIndexes;
     }
 
-    public void setTxIndexes(List<Integer> txIndexes) {
+    public void setTxIndexes(List<Long> txIndexes) {
         this.txIndexes = txIndexes;
     }
 

@@ -3,6 +3,7 @@ package com.example.bit.View.RecycleViewAdapters;
 import android.app.Application;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +59,8 @@ public class DepositsRecycleViewAdapter extends RecyclerView.Adapter<DepositsRec
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.textViewAddress.setText(mDataset.get(position).getAddressId());
-        holder.textViewConfirmations.setText(mDataset.get(position).getConfirmations());
+        holder.textViewAddress.setText(mDataset.get(position).getAddressId() + "");
+        holder.textViewConfirmations.setText(mDataset.get(position).getConfirmations() + "");
         holder.textViewAmount.setText(mDataset.get(position).getAmount() + "BTC");
         holder.textViewTxId.setText(mDataset.get(position).getTxId());
     }

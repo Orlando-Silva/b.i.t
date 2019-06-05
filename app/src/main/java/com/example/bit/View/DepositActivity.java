@@ -3,6 +3,7 @@ package com.example.bit.View;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +62,8 @@ public class DepositActivity extends AppCompatActivity {
         depositsRecycleView.setHasFixedSize(true);
 
         addresslayoutManager = new LinearLayoutManager(this);
+        depositslayoutManager = new LinearLayoutManager(this);
+
         addressRecyclerView.setLayoutManager(addresslayoutManager);
         depositsRecycleView.setLayoutManager(depositslayoutManager);
 
@@ -81,6 +84,7 @@ public class DepositActivity extends AppCompatActivity {
         addressRecyclerView.setAdapter(mAddressAdapter);
 
         List<Deposit> deposits = depositRepository.getAllByUser(user.getId());
+
 
         if(deposits != null && !deposits.isEmpty()) {
 

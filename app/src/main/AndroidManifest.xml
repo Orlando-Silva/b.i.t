@@ -6,17 +6,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".DefaultApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:node="replace">
+        tools:node="replace">0
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="com.sample.workmanager-init"
-            android:enabled="true"/>
+            android:authorities="com.example.bit.workmanager-init"
+            android:enabled="true"
+            android:exported="false"/>
         <activity
             android:name=".View.EditUserActivity"
             android:label="@string/title_activity_edit_user"></activity>
