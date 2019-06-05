@@ -3,16 +3,18 @@ package com.example.bit.View;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.bit.DAL.Entities.Address;
+import com.example.bit.DAL.Entities.Deposit;
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.DAL.Repositories.AddressRepository;
+import com.example.bit.DAL.Repositories.DepositRepository;
 import com.example.bit.R;
 import com.example.bit.View.RecycleViewAdapters.AddressesRecycleViewAdapter;
+import com.example.bit.View.RecycleViewAdapters.DepositsRecycleViewAdapter;
 import com.example.bit.databinding.ActivityDepositsBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -29,10 +31,14 @@ public class DepositActivity extends AppCompatActivity {
     ActivityDepositsBinding bindingContent;
     User user;
     AddressRepository addressRepository;
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    DepositRepository depositRepository;
 
+    private RecyclerView addressRecyclerView;
+    private RecyclerView depositsRecycleView;
+    private RecyclerView.Adapter mAddressAdapter;
+    private RecyclerView.Adapter mDepositsAdapter;
+    private RecyclerView.LayoutManager addresslayoutManager;
+    private RecyclerView.LayoutManager depositslayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +48,21 @@ public class DepositActivity extends AppCompatActivity {
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_deposits);
         user = (User) getIntent().getSerializableExtra("User");
         addressRepository = new AddressRepository(getApplication());
-        recyclerView = bindingContent.addressesRecycleView;
-
+        depositRepository = new DepositRepository(getApplication());
 
         setSupportActionBar(bindingContent.homeToolbar);
         setTitle("Depósitos");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView.setHasFixedSize(true);
+        depositsRecycleView = bindingContent.depositsRecycleView;
+        addressRecyclerView = bindingContent.addressesRecycleView;
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        addressRecyclerView.setHasFixedSize(true);
+        depositsRecycleView.setHasFixedSize(true);
 
+        addresslayoutManager = new LinearLayoutManager(this);
+        addressRecyclerView.setLayoutManager(addresslayoutManager);
+        depositsRecycleView.setLayoutManager(depositslayoutManager);
 
         List<Address> addresses = addressRepository.getAllByUser(user.getId());
 
@@ -68,9 +77,16 @@ public class DepositActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        mAddressAdapter = new AddressesRecycleViewAdapter(addresses);
+        addressRecyclerView.setAdapter(mAddressAdapter);
 
-        mAdapter = new AddressesRecycleViewAdapter(addresses);
-        recyclerView.setAdapter(mAdapter);
+        List<Deposit> deposits = depositRepository.getAllByUser(user.getId());
+
+        if(deposits != null && !deposits.isEmpty()) {
+
+            mDepositsAdapter = new DepositsRecycleViewAdapter(deposits);
+            depositsRecycleView.setAdapter(mDepositsAdapter);
+        }
 
         bindingContent.btnNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override

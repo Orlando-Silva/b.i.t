@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.work.Configuration;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -31,6 +32,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
+        Configuration myConfig = new Configuration.Builder()
+                .setMinimumLoggingLevel(android.util.Log.INFO)
+                .build();
 
         mWorkManager = WorkManager.getInstance();
 
@@ -39,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mWorkManager.enqueueUniquePeriodicWork("VerifyDepositWorker", ExistingPeriodicWorkPolicy.KEEP, verifydepositWorker);
         mWorkManager.enqueueUniquePeriodicWork("PendingDepositWorker", ExistingPeriodicWorkPolicy.KEEP, pendingdepositWorker);
+
 
         setSupportActionBar(bindingContent.homeToolbar);
         setTitle("Página inicial");
