@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 
 public class MainActivity extends AppCompatActivity {
 
+
     ActivityMainBinding binding;
 
     @Override

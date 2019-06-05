@@ -8,21 +8,37 @@ import android.view.View;
 
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.R;
+import com.example.bit.Workers.VerifyDepositWorker;
 import com.example.bit.databinding.ActivityHomeBinding;
+
+import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding bindingContent;
     User user;
+    private WorkManager mWorkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_home);
+
+
+        mWorkManager = WorkManager.getInstance();
+
+        PeriodicWorkRequest verifydepositWorker = new PeriodicWorkRequest.Builder(VerifyDepositWorker.class, 1, TimeUnit.MINUTES).build();
+        PeriodicWorkRequest pendingdepositWorker = new PeriodicWorkRequest.Builder(VerifyDepositWorker.class, 1, TimeUnit.MINUTES).build();
+
+        mWorkManager.enqueueUniquePeriodicWork("VerifyDepositWorker", ExistingPeriodicWorkPolicy.KEEP, verifydepositWorker);
+        mWorkManager.enqueueUniquePeriodicWork("PendingDepositWorker", ExistingPeriodicWorkPolicy.KEEP, pendingdepositWorker);
 
         setSupportActionBar(bindingContent.homeToolbar);
         setTitle("Página inicial");

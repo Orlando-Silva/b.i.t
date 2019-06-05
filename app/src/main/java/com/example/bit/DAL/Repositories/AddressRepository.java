@@ -28,6 +28,9 @@ public class AddressRepository {
 
     public Address get(int id) { return mAddressDao.get(id); }
 
+    public List<Address> getAll() { return mAddressDao.getAll(); }
+
+
     public List<Address> getAllByUser(int userId) { return mAddressDao.getAllByUser(userId);}
 
     public boolean userHasAddress(int userId) {

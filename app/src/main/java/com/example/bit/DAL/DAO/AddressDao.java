@@ -23,10 +23,14 @@ public interface AddressDao {
     @Query("SELECT * FROM Addresses WHERE Id = :id LIMIT 1")
     Address get(int id);
 
+    @Query("SELECT * FROM Addresses")
+    List<Address> getAll();
+
     @Query("SELECT * FROM Addresses WHERE UserId = :userId ORDER BY ID DESC")
     List<Address> getAllByUser(int userId);
 
     @Query("UPDATE Addresses SET Label = :label WHERE Id = :addressId")
     void addLabelToAddress(int addressId, String label);
+
 
 }
