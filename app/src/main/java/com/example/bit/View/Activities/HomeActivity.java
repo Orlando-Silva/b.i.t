@@ -1,4 +1,4 @@
-package com.example.bit.View;
+package com.example.bit.View.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +8,11 @@ import android.view.View;
 
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.R;
-import com.example.bit.Workers.PendingDepositWorker;
-import com.example.bit.Workers.VerifyDepositWorker;
 import com.example.bit.databinding.ActivityHomeBinding;
-
-import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.work.Configuration;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkContinuation;
-import androidx.work.WorkManager;
 
 public class HomeActivity extends AppCompatActivity {
 

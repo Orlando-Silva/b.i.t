@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:node="replace">0
+        tools:node="replace">
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
@@ -21,17 +21,17 @@
             android:enabled="true"
             android:exported="false"/>
         <activity
-            android:name=".View.EditUserActivity"
+            android:name=".View.Activities.EditUserActivity"
             android:label="@string/title_activity_edit_user"></activity>
         <activity
-            android:name=".View.DepositActivity"
+            android:name=".View.Activities.DepositActivity"
             android:label="@string/title_activity_deposits" />
         <activity
-            android:name=".View.HomeActivity"
+            android:name=".View.Activities.HomeActivity"
             android:label="@string/title_activity_home" />
-        <activity android:name=".View.RegisterUserSecondStepActivity" />
-        <activity android:name=".View.RegisterUserActivity" />
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".View.Activities.RegisterUserSecondStepActivity" />
+        <activity android:name=".View.Activities.RegisterUserActivity" />
+        <activity android:name=".View.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

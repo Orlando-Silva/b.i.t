@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Entities.Deposit;
 import com.example.bit.DAL.Repositories.AddressRepository;
+import com.example.bit.DAL.Repositories.DepositRepository;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,20 +28,22 @@ import androidx.recyclerview.widget.RecyclerView;
 public class DepositsRecycleViewAdapter extends RecyclerView.Adapter<DepositsRecycleViewAdapter.MyViewHolder>  {
 
     private List<Deposit> mDataset;
+    private DepositRepository mDepositRepository;
+    private AddressRepository mAddressRepository;
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textViewTxId;
         public TextView textViewAddress;
         public TextView  textViewAmount;
-        public TextView  textViewConfirmations;
+
 
         public MyViewHolder(View v) {
             super(v);
             textViewTxId = v.findViewById(R.id.textViewTxId);
             textViewAddress = v.findViewById(R.id.textViewAddress);
             textViewAmount = v.findViewById(R.id.textViewAmount);
-            textViewConfirmations = v.findViewById(R.id.textViewConfirmations);
         }
     }
 
@@ -51,18 +54,23 @@ public class DepositsRecycleViewAdapter extends RecyclerView.Adapter<DepositsRec
     @Override
     public DepositsRecycleViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.deposits_row_fragment, parent, false);
 
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.deposits_row_fragment, parent, false);
+        mDepositRepository = new DepositRepository((Application)parent.getContext().getApplicationContext());
+        mAddressRepository = new AddressRepository((Application)parent.getContext().getApplicationContext());
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.textViewAddress.setText(mDataset.get(position).getAddressId() + "");
-        holder.textViewConfirmations.setText(mDataset.get(position).getConfirmations() + "");
+
+        Address address = mAddressRepository.get(mDataset.get(position).getAddressId());
+
+        holder.textViewAddress.setText(address.getPublicAddress());
         holder.textViewAmount.setText(mDataset.get(position).getAmount() + "BTC");
         holder.textViewTxId.setText(mDataset.get(position).getTxId());
+
     }
 
     @Override

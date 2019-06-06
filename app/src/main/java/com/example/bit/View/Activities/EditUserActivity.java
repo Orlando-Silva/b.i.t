@@ -1,4 +1,4 @@
-package com.example.bit.View;
+package com.example.bit.View.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;

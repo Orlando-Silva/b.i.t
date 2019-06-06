@@ -1,4 +1,4 @@
-package com.example.bit.View;
+package com.example.bit.View.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;

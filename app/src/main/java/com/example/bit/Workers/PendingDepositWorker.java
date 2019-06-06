@@ -51,6 +51,7 @@ public class PendingDepositWorker extends Worker {
 
         for (Deposit deposit: unconfirmedDeposits) {
             mDepositRepository.verifyPendingDeposit(deposit);
+
         }
 
     }

@@ -4,6 +4,7 @@ import com.example.bit.DAL.Entities.Address;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -28,6 +29,9 @@ public interface AddressDao {
 
     @Query("SELECT * FROM Addresses WHERE UserId = :userId ORDER BY ID DESC")
     List<Address> getAllByUser(int userId);
+
+    @Query("SELECT * FROM Addresses WHERE UserId = :userId ORDER BY ID DESC")
+    LiveData<List<Address>> getAllLiveDataByUser(int userId);
 
     @Query("UPDATE Addresses SET Label = :label WHERE Id = :addressId")
     void addLabelToAddress(int addressId, String label);

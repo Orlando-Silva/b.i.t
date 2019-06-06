@@ -11,6 +11,8 @@ import com.example.bit.Helpers.HttpHelpers;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+
 public class AddressRepository {
 
     private AddressDao mAddressDao;
@@ -30,8 +32,9 @@ public class AddressRepository {
 
     public List<Address> getAll() { return mAddressDao.getAll(); }
 
-
     public List<Address> getAllByUser(int userId) { return mAddressDao.getAllByUser(userId);}
+
+    public LiveData<List<Address>> getAllLiveDataByUser(int userId) { return mAddressDao.getAllLiveDataByUser(userId); }
 
     public boolean userHasAddress(int userId) {
 
