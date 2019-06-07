@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
+import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.databinding.ActivityRegisterUserBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -38,7 +39,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         if(argsIsValid()) {
             Intent i = new Intent(RegisterUserActivity.this, RegisterUserSecondStepActivity.class);
             User user = makeFirstStepUser();
-            i.putExtra("User", user);
+            i.putExtra(Constants.USER_INTENT, user);
             startActivity(i);
         }
     }

@@ -4,6 +4,7 @@ import com.example.bit.DAL.Entities.Deposit;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -29,6 +30,9 @@ public interface DepositDao {
 
     @Query("SELECT * FROM Deposits WHERE UserId = :userId ORDER BY ID DESC")
     List<Deposit> getAllByUser(int userId);
+
+    @Query("SELECT * FROM Deposits WHERE UserId = :userId ORDER BY ID DESC")
+    LiveData<List<Deposit>> getAllLiveDataByUser(int userId);
 
     @Query("SELECT * FROM Deposits WHERE TxId = :txId")
     List<Deposit> getByTxId(String txId);

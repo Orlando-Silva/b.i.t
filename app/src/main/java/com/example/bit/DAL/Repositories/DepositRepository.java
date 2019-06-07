@@ -16,6 +16,8 @@ import com.example.bit.Helpers.HttpHelpers;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+
 public class DepositRepository {
 
     private DepositDao mDepositDao;
@@ -36,6 +38,8 @@ public class DepositRepository {
     public List<Deposit> getAll() { return mDepositDao.getAll(); }
 
     public List<Deposit> getAllByUser(int userId) { return mDepositDao.getAllByUser(userId); }
+
+    public LiveData<List<Deposit>> getAllLiveDataByUser(int userId) { return mDepositDao.getAllLiveDataByUser(userId); }
 
     public List<Deposit> getByTxId(String txId) { return mDepositDao.getByTxId(txId); }
 

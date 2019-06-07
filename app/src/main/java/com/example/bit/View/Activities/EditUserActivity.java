@@ -10,6 +10,7 @@ import com.example.bit.DAL.Entities.User;
 import com.example.bit.DAL.Repositories.UserRepository;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
+import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.databinding.ActivityEditUserBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -26,7 +27,7 @@ public class EditUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_edit_user);
-        user = (User) getIntent().getSerializableExtra("User");
+        user = (User) getIntent().getSerializableExtra(Constants.USER_INTENT);
         bindingContent.tvName.getEditText().setText(user.getName());
         bindingContent.tvEmail.getEditText().setText(user.getEmail());
         userRepository = new UserRepository(getApplication());
@@ -54,7 +55,7 @@ public class EditUserActivity extends Activity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent i = new Intent(EditUserActivity.this, HomeActivity.class);
-                                    i.putExtra("User", user);
+                                    i.putExtra(Constants.USER_INTENT, user);
                                     startActivity(i);
                                     finish();
                                 }

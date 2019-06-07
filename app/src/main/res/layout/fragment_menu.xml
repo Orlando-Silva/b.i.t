@@ -1,0 +1,65 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.35" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <Button
+                android:id="@+id/depositsButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/home_deposit"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/design_default_color_secondary"
+                android:drawableTop="@drawable/reorder_horizontal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/homeButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/home_home"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/design_default_color_secondary"
+                android:drawableTop="@drawable/home"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_marginEnd="30dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/home_withdraw"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/design_default_color_secondary"
+                android:drawableTop="@drawable/send"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

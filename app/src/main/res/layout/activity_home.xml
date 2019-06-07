@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/homeToolbar"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <fragment
+            android:id="@+id/actionBarFragment"
             android:layout_width="match_parent"
-            android:background="@color/design_default_color_secondary"
-            android:layout_height="?attr/actionBarSize">
-
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="?attr/actionBarSize"
+            android:name="com.example.bit.View.Fragments.ActionBarFragment"
+            tools:layout="@layout/fragment_action_bar">
+        </fragment>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +23,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_margin="50dp"
                 android:src="@drawable/bitcoinlogo"
                 />
@@ -50,68 +49,20 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:background="@drawable/border"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3" >
+            android:layout_weight="0.3">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_marginStart="30dp"
+            <fragment
+                android:id="@+id/menuFragment"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-
-                <Button
-                    android:id="@+id/depositsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/home_deposit"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:drawableTop="@drawable/reorder_horizontal"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/home_home"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:drawableTop="@drawable/home"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_marginEnd="30dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/home_withdraw"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:drawableTop="@drawable/send"/>
-
-            </LinearLayout>
-
+                android:name="com.example.bit.View.Fragments.MenuFragment"
+                tools:layout="@layout/fragment_menu">
+            </fragment>
 
         </LinearLayout>
-
 
     </LinearLayout>
 

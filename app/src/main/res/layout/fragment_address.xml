@@ -12,11 +12,11 @@
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="100dp"
             android:layout_marginEnd="100dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="@string/deposits_newAddress"
             android:textColor="@color/design_default_color_on_primary" />
 
@@ -25,8 +25,8 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            tools:listitem="@layout/recycler_view_item" />
+            android:layout_weight="12"
+            tools:listitem="@layout/fragment_address_row" />
 
     </LinearLayout>
 </layout>

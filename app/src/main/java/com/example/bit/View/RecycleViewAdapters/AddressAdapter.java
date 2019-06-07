@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.media.AsyncPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
     @Override
     public AddressAdapter.AddressViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.addresslist_row_fragment, parent, false);
+        View itemView = mInflater.inflate(R.layout.fragment_address_row, parent, false);
         return new AddressViewHolder(itemView);
     }
 
@@ -101,7 +100,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
                 new MaterialAlertDialogBuilder(v.getContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
                         .setTitle(title)
                         .setView(edittext)
-                        .setPositiveButton(generateDialogPositiveButtonText(addressHasLabel), saveLabelChangeEvent(edittext, application, currentAddress.getId()))
+                        .setPositiveButton(generateDialogPositiveButtonText(addressHasLabel), saveLabelChangeEvent(edittext, application, currentAddress))
                         .setNegativeButton("Cancelar", null)
                         .create()
                         .show();
@@ -110,24 +109,24 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     }
 
     private String generateDialogPositiveButtonText(boolean addressHasLabel) {
-        return addressHasLabel ? "Adicionar" : "Alterar";
+        return addressHasLabel ? "Alterar" : "Adicionar";
     }
 
     private String generateDialogTitle(boolean addressHasLabel) {
         return addressHasLabel
-                ? "Altere o"
-                : "Adicione um" + "  identificador para o seu endereço:";
+                ? "Altere o identificador do seu endereço"
+                : "Adicione um identificador para o seu endereço:";
     }
 
-    private DialogInterface.OnClickListener saveLabelChangeEvent(final EditText edittext,final Application application, final int addressId) {
+    private DialogInterface.OnClickListener saveLabelChangeEvent(final EditText edittext,final Application application, final Address address) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 final String label = getEditedLabelValue(edittext);
-                new AddressRepository(application).addLabelToAddress(addressId, label);
-                // Solve Observer problem
-                notifyDataSetChanged();
+                new AddressRepository(application).addLabelToAddress(address.getId(), label);
+                mAddress.get(mAddress.indexOf(address)).setLabel(label);
+                notifyItemChanged(mAddress.indexOf(address));
             }
         };
     }

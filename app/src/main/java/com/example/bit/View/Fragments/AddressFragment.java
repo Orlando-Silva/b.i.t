@@ -1,7 +1,6 @@
 package com.example.bit.View.Fragments;
 
 
-import android.app.Application;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,12 +9,11 @@ import android.view.ViewGroup;
 
 import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Entities.User;
-import com.example.bit.DAL.Repositories.AddressRepository;
 import com.example.bit.R;
 import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.View.RecycleViewAdapters.AddressAdapter;
 import com.example.bit.View.ViewModels.AddressViewModel;
-import com.example.bit.databinding.FragmentDepositAddressesBinding;
+import com.example.bit.databinding.FragmentAddressBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
@@ -30,33 +28,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AddressFragment extends androidx.fragment.app.Fragment {
 
     private User mUser;
-    private AddressRepository mAddressRepository;
     private AddressViewModel mAddressViewModel;
     private RecyclerView mAddressRecyclerView;
     private AddressAdapter mAddressAdapter;
     private RecyclerView.LayoutManager mAddresslayoutManager;
-    private FragmentDepositAddressesBinding mbindingContext;
-
-    public AddressFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private FragmentAddressBinding mbindingContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = bindView(inflater, container, savedInstanceState);
-        bindRepositories(container);
         recoverUserFromIntent();
         bindFragmentElements(container);
         return view;
-    }
-
-    private void bindRepositories(ViewGroup container) {
-        mAddressRepository = new AddressRepository(getActivity().getApplication());
     }
 
     private void bindFragmentElements(ViewGroup container) {
@@ -72,14 +55,13 @@ public class AddressFragment extends androidx.fragment.app.Fragment {
         mAddresslayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mAddressRecyclerView.setLayoutManager(mAddresslayoutManager);
 
-        List<Address> userAddress = getUserAddressesData();
         mAddressAdapter = new AddressAdapter(getActivity());
         mAddressRecyclerView.setAdapter(mAddressAdapter);
     }
 
     private void createViewModel() {
         mAddressViewModel = ViewModelProviders.of(getActivity()).get(AddressViewModel.class);
-
+        verifyAndGenerateFirstAddress();
         mAddressViewModel.getAllLiveDataByUser(mUser.getId()).observe(this, new Observer<List<Address>>() {
             @Override
             public void onChanged(List<Address> addresses) {
@@ -94,10 +76,10 @@ public class AddressFragment extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    mAddressRepository.generateAddress(mUser.getId());
+                    mAddressViewModel.generateAddress(mUser.getId());
                     generateCreateAddressMaterialDialog(v)
-                            .create()
-                            .show();
+                        .create()
+                        .show();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -119,26 +101,17 @@ public class AddressFragment extends androidx.fragment.app.Fragment {
                 });
     }
 
-    private List<Address> getUserAddressesData() {
+    private void verifyAndGenerateFirstAddress() {
         try {
-            List<Address> addresses = mAddressRepository.getAllByUser(mUser.getId());
+            List<Address> addresses = mAddressViewModel.getAllByUser(mUser.getId());
 
-            if(addresses.isEmpty()) {
-                addresses = generateFirstUserAddress();
+            if (addresses.isEmpty()) {
+                mAddressViewModel.generateFirstAddress(mUser.getId());
             }
-            return addresses;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
-    private List<Address> generateFirstUserAddress() throws Exception {
-        List<Address> addresses;
-        mAddressRepository.generateFirstAddress(mUser.getId());
-        addresses = mAddressRepository.getAllByUser(mUser.getId());
-        return addresses;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void recoverUserFromIntent() {
@@ -146,7 +119,7 @@ public class AddressFragment extends androidx.fragment.app.Fragment {
     }
 
     private View bindView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mbindingContext = DataBindingUtil.inflate(inflater, R.layout.fragment_deposit_addresses, container, false);
+        mbindingContext = DataBindingUtil.inflate(inflater, R.layout.fragment_address, container, false);
         return mbindingContext.getRoot();
     }
 

@@ -36,6 +36,10 @@ public class AddressRepository {
 
     public LiveData<List<Address>> getAllLiveDataByUser(int userId) { return mAddressDao.getAllLiveDataByUser(userId); }
 
+    public void updateAddresses(List<Address> addresses) {
+        mAddressDao.updateAddresses(addresses);
+    }
+
     public boolean userHasAddress(int userId) {
 
         List<Address> addresses = getAllByUser(userId);

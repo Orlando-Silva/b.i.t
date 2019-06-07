@@ -1,8 +1,6 @@
 package com.example.bit;
 
 import android.app.Application;
-import android.content.Context;
-import android.util.Log;
 
 import com.example.bit.Workers.PendingDepositWorker;
 import com.example.bit.Workers.VerifyDepositWorker;
@@ -16,14 +14,12 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 
-import androidx.work.Configuration;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkerFactory;
 
-public class DefaultApplication extends Application {
+public class CustomApplicationInitiator extends Application {
 
     private WorkManager mWorkManager;
 
@@ -32,7 +28,6 @@ public class DefaultApplication extends Application {
         super.onCreate();
         setSslProtocol();
         initiateWorkers();
-
     }
 
     private void initiateWorkers() {
@@ -66,6 +61,5 @@ public class DefaultApplication extends Application {
         }
 
     }
-
 
 }

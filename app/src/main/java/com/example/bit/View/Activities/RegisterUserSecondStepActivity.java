@@ -11,6 +11,7 @@ import com.example.bit.DAL.Entities.User;
 import com.example.bit.DAL.Repositories.UserRepository;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
+import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.databinding.ActivityRegisterUserSecondStepBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -39,7 +40,7 @@ public class RegisterUserSecondStepActivity extends AppCompatActivity {
             UserRepository userRepository = new UserRepository(getApplication());
             user = userRepository.insertUser(user, bindingContent.tvPassword.getEditText().getText().toString());
             Intent i = new Intent(RegisterUserSecondStepActivity.this, HomeActivity.class);
-            i.putExtra("User", user);
+            i.putExtra(Constants.USER_INTENT, user);
             startActivity(i);
             finish();
         }
