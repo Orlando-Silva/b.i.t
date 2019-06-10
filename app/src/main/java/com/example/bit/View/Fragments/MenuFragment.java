@@ -3,6 +3,7 @@ package com.example.bit.View.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,13 +13,17 @@ import com.example.bit.View.Activities.DepositActivity;
 import com.example.bit.View.Activities.HomeActivity;
 import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.databinding.FragmentMenuBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 public class MenuFragment extends androidx.fragment.app.Fragment {
 
     private User mUser;
     private FragmentMenuBinding mbindingContext;
+    private BottomNavigationView navigationView;
+
 
     public MenuFragment() { }
 
@@ -26,30 +31,33 @@ public class MenuFragment extends androidx.fragment.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = bindView(inflater, container, savedInstanceState);
         recoverUserFromIntent();
-        addOnClickListeners();
+        navigationView = mbindingContext.navigationView;
+        navigationView.setOnNavigationItemSelectedListener(BottomNavOnClickHandler());
         return view;
-    }
-
-    private void addOnClickListeners() {
-
-        mbindingContext.homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Home(v);
-            }
-        });
-
-        mbindingContext.depositsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Deposits(v);
-            }
-        });
-
     }
 
     private void recoverUserFromIntent() {
         mUser = (User) getActivity().getIntent().getSerializableExtra(Constants.USER_INTENT);
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener BottomNavOnClickHandler() {
+        return new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true); 
+                switch (item.getItemId()) {
+                    case R.id.navigation_Deposits:
+                        Deposits(getView());
+                        break;
+                    case R.id.navigation_Home:
+                        Home(getView());
+                        break;
+                    case R.id.navigation_Withdraw:
+                        break;
+                }
+                return true;
+            }
+        };
     }
 
     private View bindView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

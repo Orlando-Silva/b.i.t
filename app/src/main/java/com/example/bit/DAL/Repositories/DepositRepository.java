@@ -6,6 +6,7 @@ import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.DepositDao;
 import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Entities.Deposit;
+import com.example.bit.DAL.Helpers.DateConverter;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainGetLatestBlockResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawTransactionResponse;
@@ -101,6 +102,7 @@ public class DepositRepository {
                         deposit.setAmount(transactionTotal);
                         deposit.setAddressId(address.getId());
                         deposit.setConfirmations(transactionResponse.getConfirmations());
+                        deposit.setCreatedAt(DateConverter.fromString(transactionResponse.getReceived()));
                         deposit.setTxId(transaction.getHash());
                         deposit.setUserId(address.getUserId());
 

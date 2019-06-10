@@ -55,4 +55,7 @@ public class UserRepository {
         User user = mUserDao.getByLoginAndPassword(login, finalPassword);
         return user;
     }
+
+    public double getBalance(int userId) { return mUserDao.getBalance(userId); }
+
 }

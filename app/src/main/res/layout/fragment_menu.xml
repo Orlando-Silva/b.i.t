@@ -1,65 +1,18 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:background="@drawable/border"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.35" >
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_marginStart="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-
-            <Button
-                android:id="@+id/depositsButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/home_deposit"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/design_default_color_secondary"
-                android:drawableTop="@drawable/reorder_horizontal"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/homeButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/home_home"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/design_default_color_secondary"
-                android:drawableTop="@drawable/home"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_marginEnd="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/home_withdraw"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/design_default_color_secondary"
-                android:drawableTop="@drawable/send"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:itemBackground="@color/design_default_color_secondary"
+        app:itemIconTint="@color/design_default_color_surface"
+        app:itemTextColor="@color/design_default_color_surface"
+        app:menu="@menu/navigation"/>
 </layout>

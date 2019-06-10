@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_Deposits"
+        android:icon="@drawable/reorder_horizontal"
+        android:title="Depósitos"/>
+
+    <item
+        android:id="@+id/navigation_Home"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/navigation_Withdraw"
+        android:icon="@drawable/send"
+        android:title="Retiradas"/>
+
+</menu>

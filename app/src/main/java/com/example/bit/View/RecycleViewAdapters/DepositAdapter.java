@@ -12,7 +12,13 @@ import com.example.bit.DAL.Entities.Deposit;
 import com.example.bit.DAL.Repositories.AddressRepository;
 import com.example.bit.DAL.Repositories.DepositRepository;
 import com.example.bit.R;
+import com.google.android.material.chip.Chip;
 
+import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,15 +32,13 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.DepositV
 
     public static class DepositViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewTxId;
-        public TextView textViewAddress;
-        public TextView  textViewAmount;
+        public Chip dateReceived;
+        public Chip  amountReceived;
 
         public DepositViewHolder(View v) {
             super(v);
-            textViewTxId = v.findViewById(R.id.textViewTxId);
-            textViewAddress = v.findViewById(R.id.textViewAddress);
-            textViewAmount = v.findViewById(R.id.textViewAmount);
+            dateReceived = v.findViewById(R.id.dateReceived);
+            amountReceived = v.findViewById(R.id.amountReceived);
         }
     }
 
@@ -58,10 +62,14 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.DepositV
     @Override
     public void onBindViewHolder(DepositViewHolder holder, final int position) {
 
-        Address address = mAddressRepository.get(mDeposits.get(position).getAddressId());
-        holder.textViewAddress.setText(address.getPublicAddress());
-        holder.textViewAmount.setText(mDeposits.get(position).getAmount() + "BTC");
-        holder.textViewTxId.setText(mDeposits.get(position).getTxId());
+        final String pattern = "MM/dd/yyyy HH:mm:ss";
+        DateFormat df = new SimpleDateFormat(pattern);
+        Date dateReceived = mDeposits.get(position).getCreatedAt();
+        holder.dateReceived.setText(df.format(dateReceived));
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.########");
+        decimalFormat.setRoundingMode(RoundingMode.UNNECESSARY);
+        holder.amountReceived.setText(decimalFormat.format(mDeposits.get(position).getAmount()) + " BTC");
 
     }
 

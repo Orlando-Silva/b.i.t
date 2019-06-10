@@ -11,17 +11,17 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-@Entity(tableName = "Deposits",
+@Entity(tableName = "Withdraws",
         foreignKeys = {
-        @ForeignKey(entity = User.class,
-                parentColumns = "Id",
-                childColumns = "UserId",
-                onDelete = ForeignKey.CASCADE),
-        @ForeignKey(entity = User.class,
-                parentColumns = "Id",
-                childColumns = "AddressId",
-                onDelete = ForeignKey.CASCADE) })
-public class Deposit {
+                @ForeignKey(entity = User.class,
+                        parentColumns = "Id",
+                        childColumns = "UserId",
+                        onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = User.class,
+                        parentColumns = "Id",
+                        childColumns = "AddressId",
+                        onDelete = ForeignKey.CASCADE) })
+public class Withdraw {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -31,6 +31,10 @@ public class Deposit {
     @NonNull
     @ColumnInfo(name = "Amount")
     private double amount;
+
+    @NonNull
+    @ColumnInfo(name = "fee")
+    private double fee;
 
     @NonNull
     @ColumnInfo(name = "UserId")
@@ -69,21 +73,20 @@ public class Deposit {
         this.amount = amount;
     }
 
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
+
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    @NonNull
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(@NonNull Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public int getAddressId() {
@@ -100,6 +103,15 @@ public class Deposit {
 
     public void setConfirmations(int confirmations) {
         this.confirmations = confirmations;
+    }
+
+    @NonNull
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(@NonNull Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @NonNull
