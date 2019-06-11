@@ -12,7 +12,6 @@ import com.example.bit.R;
 import com.example.bit.View.Fragments.ActionBarFragment;
 import com.example.bit.View.IntentExtras.Constants;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import androidx.appcompat.app.AppCompatActivity;

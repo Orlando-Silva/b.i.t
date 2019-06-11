@@ -40,6 +40,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="balanceMessage">Seu Saldo atual é de:</string>
+    <string name="title_activity_withdraw">WithdrawActivity</string>
+    <string name="withdraw_request_text">Digite a quantidade desejeda:</string>
+    <string name="withdraw_request_header">Retirada</string>
+    <string name="withdraw_amount_hint">Quantidade em bitcoin desejada</string>
+    <string name="btc_symbol">BTC</string>
+    <string name="withdraw_button_text">EFETUAR RETIRADA</string>
 
 
 </resources>

@@ -11,6 +11,7 @@ import com.example.bit.DAL.Entities.User;
 import com.example.bit.R;
 import com.example.bit.View.Activities.DepositActivity;
 import com.example.bit.View.Activities.HomeActivity;
+import com.example.bit.View.Activities.WithdrawActivity;
 import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.databinding.FragmentMenuBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -53,6 +54,7 @@ public class MenuFragment extends androidx.fragment.app.Fragment {
                         Home(getView());
                         break;
                     case R.id.navigation_Withdraw:
+                        Withdraw(getView());
                         break;
                 }
                 return true;
@@ -74,6 +76,13 @@ public class MenuFragment extends androidx.fragment.app.Fragment {
 
     public void Deposits(View view) {
         Intent i = new Intent(getContext(), DepositActivity.class);
+        i.putExtra(Constants.USER_INTENT, mUser);
+        startActivity(i);
+        getActivity().finish();
+    }
+
+    public void Withdraw(View view) {
+        Intent i = new Intent(getContext(), WithdrawActivity.class);
         i.putExtra(Constants.USER_INTENT, mUser);
         startActivity(i);
         getActivity().finish();

@@ -14,15 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <activity
+            android:name=".View.Activities.WithdrawActivity"
+            android:label="@string/title_activity_withdraw"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="com.example.bit.workmanager-init"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
         <activity
             android:name=".View.Activities.EditUserActivity"
-            android:label="@string/title_activity_edit_user"></activity>
+            android:label="@string/title_activity_edit_user" />
         <activity
             android:name=".View.Activities.DepositActivity"
             android:label="@string/title_activity_deposits" />

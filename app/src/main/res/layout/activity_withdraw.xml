@@ -1,0 +1,74 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:id="@+id/actionBarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:name="com.example.bit.View.Fragments.ActionBarFragment"
+            tools:layout="@layout/fragment_action_bar">
+        </fragment>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.google.android.material.tabs.TabLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <fragment
+                    android:id="@+id/withdrawFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:name="com.example.bit.View.Fragments.WithdrawFragment"
+                    tools:layout="@layout/fragment_withdraw">
+                </fragment>
+
+                <fragment
+                    android:id="@+id/withdrawListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:name="com.example.bit.View.Fragments.WithdrawListFragment"
+                    tools:layout="@layout/fragment_withdraw_list">
+                </fragment>
+
+            </androidx.viewpager.widget.ViewPager>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.33">
+
+            <fragment
+                android:id="@+id/menuFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.example.bit.View.Fragments.MenuFragment"
+                tools:layout="@layout/fragment_menu">
+            </fragment>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

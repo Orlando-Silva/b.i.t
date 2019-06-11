@@ -1,0 +1,83 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="54dp"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_surface"
+                android:textSize="20sp"
+                style="@style/TextAppearance.MaterialComponents.Button"
+                android:text="@string/withdraw_request_header"
+                />
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_surface"
+                android:textSize="20sp"
+                style="@style/TextAppearance.MaterialComponents.Button"
+                android:text="@string/withdraw_request_text"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tvWithdrawAmount"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="40dp"
+                android:hint="@string/withdraw_amount_hint">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/withdrawButton"
+                android:layout_width="match_parent"
+                android:layout_margin="32dp"
+                android:layout_height="match_parent"
+                style="@style/Widget.MaterialComponents.Button"
+                android:textColor="@color/design_default_color_on_primary"
+                android:text="@string/withdraw_button_text" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
