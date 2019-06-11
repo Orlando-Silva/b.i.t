@@ -38,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.helloUser)).setText("Olá " + user.getName() + "!");
 
         DecimalFormat df = new DecimalFormat("#.########");
-        df.setRoundingMode(RoundingMode.UNNECESSARY);
         double balanceValue = mUserRepository.getBalance(user.getId());
 
         ((TextView)findViewById(R.id.balance)).setText(df.format(balanceValue) + " BTC");

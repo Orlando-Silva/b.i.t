@@ -33,8 +33,7 @@ public interface UserDao {
     @Query("SELECT * FROM Users WHERE Login = :login AND Password = :password LIMIT 1")
     User getByLoginAndPassword(String login, byte[] password);
 
-    @Query("SELECT (credit - debit) as balance FROM (SELECT SUM(d.Amount) as credit, d.UserId FROM Deposits d WHERE d.Confirmations > 6 AND d.UserId = :userId GROUP BY d.UserId) as credit LEFT JOIN (SELECT SUM(w.Amount) as debit, w.UserId FROM Withdraws w WHERE w.UserId = :userId GROUP BY w.UserId) as debit  ON debit.UserId = credit.UserId LIMIT 1")
+    @Query("SELECT SUM(balance) FROM ( SELECT UserId, Amount as balance FROM Deposits WHERE Confirmations > 6 AND UserId = :userId UNION ALL SELECT UserId, -Amount as balance FROM Withdraws WHERE UserId = :userId)")
     double getBalance(int userId);
-
 
 }

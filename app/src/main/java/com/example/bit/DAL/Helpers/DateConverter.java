@@ -19,8 +19,9 @@ public class DateConverter {
 
     public static Date fromString(String date) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddThh:mm:ssZ");
-            return new java.sql.Date(format.parse(date).getTime());
+            date = date.replace("Z", "+00:00");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            return new java.sql.Date(format.parse(date).getDate());
         }
         catch (Exception exception) {
             return null;

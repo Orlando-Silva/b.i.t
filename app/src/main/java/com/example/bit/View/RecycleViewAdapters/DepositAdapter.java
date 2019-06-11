@@ -62,13 +62,12 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.DepositV
     @Override
     public void onBindViewHolder(DepositViewHolder holder, final int position) {
 
-        final String pattern = "MM/dd/yyyy HH:mm:ss";
+        final String pattern = "dd/MM/yyyy HH:mm";
         DateFormat df = new SimpleDateFormat(pattern);
         Date dateReceived = mDeposits.get(position).getCreatedAt();
         holder.dateReceived.setText(df.format(dateReceived));
 
         DecimalFormat decimalFormat = new DecimalFormat("#.########");
-        decimalFormat.setRoundingMode(RoundingMode.UNNECESSARY);
         holder.amountReceived.setText(decimalFormat.format(mDeposits.get(position).getAmount()) + " BTC");
 
     }
