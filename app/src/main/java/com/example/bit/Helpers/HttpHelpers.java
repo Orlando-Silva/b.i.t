@@ -9,8 +9,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import com.example.bit.DAL.HttpRequestObjects.SendWithdrawFirstStepRequest;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.InputStreamReader;
 
@@ -23,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -98,6 +103,76 @@ public class HttpHelpers {
         return null;
     }
 
+    public static <T, P, K> T makeWithdrawPostRequest(String urlTo, SendWithdrawFirstStepRequest parameters, Class<T> clazz) {
+        String inputLine;
+
+        try {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL(urlTo);
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            byte[] input =  new GsonBuilder().create().toJson(parameters).getBytes("utf-8");
+            os.write(input, 0, input.length);
+
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+            writer.flush();
+            writer.close();
+            os.close();
+
+            conn.connect();
+
+            InputStreamReader streamReader = null;
+
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK
+                || conn.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
+                streamReader = new InputStreamReader(conn.getInputStream());
+            }
+            else {
+                streamReader = new InputStreamReader(conn.getErrorStream());
+            }
+
+            BufferedReader reader = new BufferedReader(streamReader);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while((inputLine = reader.readLine()) != null){
+                stringBuilder.append(inputLine);
+            }
+
+            reader.close();
+            streamReader.close();
+
+            String stringResult = stringBuilder.toString();
+            Log.e("WithdrawError", stringResult);
+            return new GsonBuilder().create().fromJson(stringResult, clazz);
+        }
+        catch (ProtocolException e) {
+            Log.d("url", urlTo);
+            e.printStackTrace();
+
+        } catch (MalformedURLException e) {
+            Log.d("url", urlTo);
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            Log.d("url", urlTo);
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+
 
     private static <P, K> String getQuery(List<Pair<P, K>> params) throws UnsupportedEncodingException
     {
@@ -127,6 +202,9 @@ public class HttpHelpers {
         try {
             //Create a URL object holding our url
             URL myUrl = new URL(url);
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
 
             HttpURLConnection connection =(HttpURLConnection)
                     myUrl.openConnection();

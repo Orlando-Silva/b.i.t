@@ -1,6 +1,7 @@
 package com.example.bit;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.example.bit.Workers.PendingDepositWorker;
 import com.example.bit.Workers.VerifyDepositWorker;
@@ -27,6 +28,8 @@ public class CustomApplicationInitiator extends Application {
     public void onCreate() {
         super.onCreate();
         setSslProtocol();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         initiateWorkers();
     }
 

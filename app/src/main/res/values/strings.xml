@@ -46,6 +46,7 @@
     <string name="withdraw_amount_hint">Quantidade em bitcoin desejada</string>
     <string name="btc_symbol">BTC</string>
     <string name="withdraw_button_text">EFETUAR RETIRADA</string>
+    <string name="withdraw_address_hint">Endereço de destino</string>
 
 
 </resources>

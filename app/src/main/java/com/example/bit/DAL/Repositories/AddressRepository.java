@@ -6,6 +6,7 @@ import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.AddressDao;
 import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Enums.Status;
+import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockcypherCreateAddressResponse;
 import com.example.bit.Helpers.HttpHelpers;
 
@@ -78,6 +79,11 @@ public class AddressRepository {
     public Address addLabelToAddress(int addressId, String label) {
         mAddressDao.addLabelToAddress(addressId, label);
         return mAddressDao.get(addressId);
+    }
+
+    public BlockchainRawAddressResponse getAddressInBlockchain(String address) {
+        return HttpHelpers.makeGetRequest("https://testnet.blockchain.info/rawaddr/" +
+                address, new BlockchainRawAddressResponse().getClass());
     }
 
 
