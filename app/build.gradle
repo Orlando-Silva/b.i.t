@@ -51,4 +51,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:2.1.0-alpha04"
     implementation "androidx.navigation:navigation-ui:2.1.0-alpha04"
 
+    implementation "com.madgag:sc-light-jdk15on:1.47.0.3"
+
+
 }
