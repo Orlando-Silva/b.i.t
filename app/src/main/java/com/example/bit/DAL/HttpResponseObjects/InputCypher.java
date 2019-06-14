@@ -12,16 +12,16 @@ public class InputCypher {
     private String prevHash;
     @SerializedName("output_index")
     @Expose
-    private Integer outputIndex;
+    private Long outputIndex;
     @SerializedName("script")
     @Expose
     private String script;
     @SerializedName("output_value")
     @Expose
-    private Integer outputValue;
+    private Long outputValue;
     @SerializedName("sequence")
     @Expose
-    private Integer sequence;
+    private Long sequence;
     @SerializedName("addresses")
     @Expose
     private List<String> addresses = null;
@@ -30,7 +30,7 @@ public class InputCypher {
     private String scriptType;
     @SerializedName("age")
     @Expose
-    private Integer age;
+    private Long age;
     @SerializedName("witness")
     @Expose
     private List<String> witness = null;
@@ -43,11 +43,11 @@ public class InputCypher {
         this.prevHash = prevHash;
     }
 
-    public Integer getOutputIndex() {
+    public Long getOutputIndex() {
         return outputIndex;
     }
 
-    public void setOutputIndex(Integer outputIndex) {
+    public void setOutputIndex(Long outputIndex) {
         this.outputIndex = outputIndex;
     }
 
@@ -59,19 +59,19 @@ public class InputCypher {
         this.script = script;
     }
 
-    public Integer getOutputValue() {
+    public Long getOutputValue() {
         return outputValue;
     }
 
-    public void setOutputValue(Integer outputValue) {
+    public void setOutputValue(Long outputValue) {
         this.outputValue = outputValue;
     }
 
-    public Integer getSequence() {
+    public Long getSequence() {
         return sequence;
     }
 
-    public void setSequence(Integer sequence) {
+    public void setSequence(Long sequence) {
         this.sequence = sequence;
     }
 
@@ -91,11 +91,11 @@ public class InputCypher {
         this.scriptType = scriptType;
     }
 
-    public Integer getAge() {
+    public Long getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(Long age) {
         this.age = age;
     }
 

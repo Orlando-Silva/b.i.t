@@ -11,10 +11,14 @@ import com.example.bit.DAL.HttpResponseObjects.BlockchainGetLatestBlockResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawTransactionResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockcypherTransactionResponse;
+import com.example.bit.DAL.HttpResponseObjects.Deposit.TransactionsByAddress;
+import com.example.bit.DAL.HttpResponseObjects.Deposit.Txref;
 import com.example.bit.DAL.HttpResponseObjects.Out;
+import com.example.bit.DAL.HttpResponseObjects.Output;
 import com.example.bit.DAL.HttpResponseObjects.Tx;
 import com.example.bit.Helpers.HttpHelpers;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -75,26 +79,26 @@ public class DepositRepository {
 
     public void verifyDepositsInBlockchain(Address address) {
 
-        BlockchainRawAddressResponse response =  HttpHelpers.makeGetRequest("https://testnet.blockchain.info/rawaddr/" +
-                address.getPublicAddress(), new BlockchainRawAddressResponse().getClass());
+        TransactionsByAddress response =  HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/btc/test3/addrs/" +
+                address.getPublicAddress(), new TransactionsByAddress().getClass());
 
-        verifyTransactions(response.getTxs(), address);
+        verifyTransactions(response.getTxrefs(), address);
 
     }
 
-    private void verifyTransactions(List<Tx> transactions, Address address) {
+    private void verifyTransactions(List<Txref> transactions, Address address) {
 
-        for (Tx transaction: transactions) {
+        for (Txref transaction: transactions) {
 
-            List<Deposit> existingDeposits = mDepositDao.getByTxIdAndAddress(transaction.getHash(), address.getPublicAddress());
+            List<Deposit> existingDeposits = mDepositDao.getByTxIdAndAddress(transaction.getTxHash(), address.getPublicAddress());
 
             if(existingDeposits == null  || existingDeposits.isEmpty()) {
 
-                double transactionTotal = verifyOutputs(transaction.getOut(), address);
+                BlockcypherTransactionResponse transactionResponse = getTransaction(transaction.getTxHash());
+
+                double transactionTotal = verifyOutputs(transactionResponse.getOutputs(), address);
 
                 if(transactionTotal > 0)  {
-
-                    BlockcypherTransactionResponse transactionResponse = getTransaction(transaction.getHash());
 
                     if(transactionResponse != null) {
 
@@ -102,8 +106,8 @@ public class DepositRepository {
                         deposit.setAmount(transactionTotal);
                         deposit.setAddressId(address.getId());
                         deposit.setConfirmations(transactionResponse.getConfirmations());
-                        deposit.setCreatedAt(DateConverter.fromString(transactionResponse.getReceived()));
-                        deposit.setTxId(transaction.getHash());
+                        deposit.setCreatedAt(new Date());
+                        deposit.setTxId(transaction.getTxHash());
                         deposit.setUserId(address.getUserId());
 
                         mDepositDao.insert(deposit);
@@ -115,13 +119,13 @@ public class DepositRepository {
         }
     }
 
-    private float verifyOutputs(List<Out> outputs, Address address) {
+    private float verifyOutputs(List<Output> outputs, Address address) {
 
         float transactionTotal = 0;
 
-        for (Out output : outputs) {
+        for (Output output : outputs) {
 
-            if (output.getAddr().equals(address.getPublicAddress())) {
+            if (output.getAddresses().get(0).equals(address.getPublicAddress())) {
                 transactionTotal += Float.parseFloat(output.getValue() + "") / Float.parseFloat(100000000 + "");
             }
         }

@@ -12,19 +12,17 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/currentBalance"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="54dp"
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:textAlignment="center"
                 android:textColor="@color/design_default_color_surface"
                 android:textSize="20sp"
-                style="@style/TextAppearance.MaterialComponents.Button"
-                android:text="@string/withdraw_request_header"
-                />
+                style="@style/TextAppearance.MaterialComponents.Button"/>
 
             <TextView
-                android:id="@+id/currentBalance"
+                android:id="@+id/currentFee"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:layout_weight="1"

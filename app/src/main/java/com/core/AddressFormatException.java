@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.bitcoin.core;
+package com.core;
 
 @SuppressWarnings("serial")
 public class AddressFormatException extends Exception {

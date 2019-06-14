@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import com.example.bit.DAL.HttpRequestObjects.SendWithdrawFirstStepRequest;
+import com.example.bit.DAL.HttpResponseObjects.WithdrawResponse.SendWithdrawFirstStepResponse;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -48,7 +49,6 @@ public class HttpHelpers {
 
             StrictMode.setThreadPolicy(policy);
 
-            //Create a URL object holding our url
             URL url = new URL(urlTo);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
@@ -103,7 +103,7 @@ public class HttpHelpers {
         return null;
     }
 
-    public static <T, P, K> T makeWithdrawPostRequest(String urlTo, SendWithdrawFirstStepRequest parameters, Class<T> clazz) {
+    public static <T, P, K> T makeWithdrawPostRequest(String urlTo, SendWithdrawFirstStepRequest parameters, Class<T> clazz) throws Exception{
         String inputLine;
 
         try {
@@ -159,17 +159,89 @@ public class HttpHelpers {
         catch (ProtocolException e) {
             Log.d("url", urlTo);
             e.printStackTrace();
+            throw e;
 
         } catch (MalformedURLException e) {
             Log.d("url", urlTo);
             e.printStackTrace();
+            throw e;
 
         } catch (IOException e) {
             Log.d("url", urlTo);
             e.printStackTrace();
+            throw e;
 
         }
-        return null;
+    }
+
+    public static <T, P, K> T makeSecondStepWithdrawPostRequest(String urlTo, SendWithdrawFirstStepResponse parameters, Class<T> clazz) throws Exception {
+        String inputLine;
+
+        try {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL(urlTo);
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            byte[] input =  new GsonBuilder().create().toJson(parameters).getBytes("utf-8");
+            os.write(input, 0, input.length);
+
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+            writer.flush();
+            writer.close();
+            os.close();
+
+            conn.connect();
+
+            InputStreamReader streamReader = null;
+
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_CREATED
+                    || conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                streamReader = new InputStreamReader(conn.getInputStream());
+            }
+            else {
+                streamReader = new InputStreamReader(conn.getErrorStream());
+            }
+
+            BufferedReader reader = new BufferedReader(streamReader);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while((inputLine = reader.readLine()) != null){
+                stringBuilder.append(inputLine);
+            }
+
+            reader.close();
+            streamReader.close();
+
+            String stringResult = stringBuilder.toString();
+            Log.e("WithdrawError", stringResult);
+            return new GsonBuilder().create().fromJson(stringResult, clazz);
+        }
+        catch (ProtocolException e) {
+            Log.d("url", urlTo);
+            e.printStackTrace();
+            throw e;
+
+        } catch (MalformedURLException e) {
+            Log.d("url", urlTo);
+            e.printStackTrace();
+            throw e;
+
+        } catch (IOException e) {
+            Log.d("url", urlTo);
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 

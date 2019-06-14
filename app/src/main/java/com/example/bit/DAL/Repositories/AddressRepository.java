@@ -41,6 +41,9 @@ public class AddressRepository {
         mAddressDao.updateAddresses(addresses);
     }
 
+    public Address getByPublicAddress(String publicAddress) { return mAddressDao.getByPublicAddress(publicAddress); }
+
+
     public boolean userHasAddress(int userId) {
 
         List<Address> addresses = getAllByUser(userId);
@@ -70,6 +73,7 @@ public class AddressRepository {
             address.setPublicKey(response.get_public());
             address.setStatus(Status.ACTIVE);
             address.setUserId(userId);
+            address.setWif(response.get_wif());
             mAddressDao.insert(address);
             return address;
         }

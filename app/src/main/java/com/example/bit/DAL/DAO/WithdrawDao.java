@@ -37,12 +37,6 @@ public interface WithdrawDao {
     @Query("SELECT * FROM Withdraws WHERE TxId = :txId")
     List<Withdraw> getByTxId(String txId);
 
-    @Query("SELECT * FROM Withdraws WHERE AddressId = :addressId")
-    List<Withdraw> getByAddress(int addressId);
-
-    @Query("SELECT w.* FROM Withdraws w INNER JOIN Addresses a ON a.Id = w.AddressId  WHERE a.publicAddress = :address AND w.TxId = :txId")
-    List<Withdraw> getByTxIdAndAddress(String txId, String address);
-
     @Query("SELECT * FROM Withdraws WHERE Confirmations < 7")
     List<Withdraw> getUnconfirmedWithdraws();
 

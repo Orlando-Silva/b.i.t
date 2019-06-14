@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bit.DAL.Entities.User;
+import com.example.bit.DAL.Entities.Withdraw;
 import com.example.bit.DAL.Repositories.UserRepository;
 import com.example.bit.DAL.Repositories.WithdrawRepository;
 import com.example.bit.Helpers.StringHelpers;
@@ -38,13 +39,15 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
         bindRepositories();
         setWithdrawListnerHandler();
         displayBalance();
+        mWithdrawRepository.deleteAll();
         return view;
     }
 
     private void displayBalance() {
         double balance = mUserRepository.getBalance(mUser.getId());
         DecimalFormat df = new DecimalFormat("#.########");
-        mbindingContext.currentBalance.setText("Seu saldo atual é de: " + df.format(balance));
+        mbindingContext.currentBalance.setText("Saldo atual: " + df.format(balance));
+        mbindingContext.currentFee.setText("Fee atual: " + df.format(mWithdrawRepository.WITHDRAW_FEE));
     }
 
     private void bindRepositories() {
@@ -57,15 +60,23 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View v) {
                 if(isValid()) {
+                    Withdraw withdraw = null;
                     try {
-                        mWithdrawRepository.makeWithdraw (
+                        withdraw = mWithdrawRepository.makeWithdraw (
                                 mUser.getId(),
                                 Double.parseDouble(mbindingContext.tvWithdrawAmount.getEditText().getText().toString()),
                                 mbindingContext.tvDestinationAddress.getEditText().getText().toString()
                         );
+
+                        if(withdraw != null) {
+                            showMaterialMessage("Aviso", "Retirada efetuada com sucesso");
+                        }
+
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        showMaterialMessage("Aviso", "Erro ao efetuar retirada: " + e.getMessage());
                     }
+
+
                 }
             }
         });
@@ -85,7 +96,7 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
 
         double balance = mUserRepository.getBalance(mUser.getId());
 
-        if(balance < Double.parseDouble(mbindingContext.tvWithdrawAmount.getEditText().getText().toString())) {
+        if(balance < (Double.parseDouble(mbindingContext.tvWithdrawAmount.getEditText().getText().toString()) + mWithdrawRepository.WITHDRAW_FEE)) {
             showMaterialMessage("Aviso", "Saldo insuficiente!");
             return false;
         }

@@ -1,11 +1,11 @@
 
-package com.example.bit.DAL.HttpResponseObjects.WithdrawResponse;
+package com.example.bit.DAL.HttpRequestObjects;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SendWithdrawFirstStepResponse {
+public class SendWithdrawSecondStepRequest {
 
     @SerializedName("tx")
     @Expose
@@ -13,17 +13,12 @@ public class SendWithdrawFirstStepResponse {
     @SerializedName("tosign")
     @Expose
     private List<String> tosign = null;
-
     @SerializedName("signatures")
     @Expose
     private List<String> signatures = null;
     @SerializedName("pubkeys")
     @Expose
     private List<String> pubkeys = null;
-
-    @SerializedName("errors")
-    @Expose
-    private List<Error> errors = null;
 
     public Tx getTx() {
         return tx;
@@ -57,11 +52,4 @@ public class SendWithdrawFirstStepResponse {
         this.pubkeys = pubkeys;
     }
 
-    public List<Error> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(List<Error> errors) {
-        this.errors = errors;
-    }
 }

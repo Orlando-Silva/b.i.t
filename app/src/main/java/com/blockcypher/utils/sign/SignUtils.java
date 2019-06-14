@@ -1,8 +1,8 @@
 package com.blockcypher.utils.sign;
 
 import com.blockcypher.model.transaction.intermediary.IntermediaryTransaction;
-import com.google.bitcoin.core.AddressFormatException;
-import com.google.bitcoin.core.Base58;
+import com.core.Base58;
+
 import org.spongycastle.asn1.DERInteger;
 import org.spongycastle.asn1.DERSequenceGenerator;
 import org.spongycastle.asn1.sec.SECNamedCurves;

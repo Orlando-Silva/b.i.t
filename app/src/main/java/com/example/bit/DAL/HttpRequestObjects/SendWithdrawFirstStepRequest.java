@@ -14,6 +14,10 @@ public class SendWithdrawFirstStepRequest {
     @Expose
     private List<Output> outputs = null;
 
+    @SerializedName("preference")
+    @Expose
+    private String preference = "low";
+
     public List<Input> getInputs() {
         return inputs;
     }
@@ -30,4 +34,11 @@ public class SendWithdrawFirstStepRequest {
         this.outputs = outputs;
     }
 
+    public String getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
 }

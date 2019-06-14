@@ -90,4 +90,27 @@ public class IntermediaryTransaction {
         return tx;
     }
 
+    public void setTx(Transaction tx) {
+        this.tx = tx;
+    }
+
+    public void setTosign(List<String> tosign) {
+        this.tosign = tosign;
+    }
+
+    public List<String> getSignatures() {
+        return signatures;
+    }
+
+    public void setSignatures(List<String> signatures) {
+        this.signatures = signatures;
+    }
+
+    public List<String> getPubkeys() {
+        return pubkeys;
+    }
+
+    public void setPubkeys(List<String> pubkeys) {
+        this.pubkeys = pubkeys;
+    }
 }

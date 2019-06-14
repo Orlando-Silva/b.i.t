@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.bitcoin.core;
+package com.core;
 
 
 import java.io.UnsupportedEncodingException;

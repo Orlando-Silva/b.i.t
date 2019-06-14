@@ -45,6 +45,9 @@ public class Address {
     @ColumnInfo(name = "UserId")
     private int userId;
 
+    @ColumnInfo(name = "Wif")
+    private String wif;
+
     public Address() {
 
     }
@@ -108,5 +111,13 @@ public class Address {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getWif() {
+        return wif;
+    }
+
+    public void setWif(String wif) {
+        this.wif = wif;
     }
 }

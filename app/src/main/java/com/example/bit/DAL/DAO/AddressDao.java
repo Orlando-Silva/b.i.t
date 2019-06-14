@@ -37,6 +37,9 @@ public interface AddressDao {
     @Query("UPDATE Addresses SET Label = :label WHERE Id = :addressId")
     void addLabelToAddress(int addressId, String label);
 
+    @Query("SELECT * FROM Addresses WHERE publicAddress = :publicAddress LIMIT 1")
+    Address getByPublicAddress(String publicAddress);
+
     @Update
     void updateAddresses(List<Address> addresses);
 

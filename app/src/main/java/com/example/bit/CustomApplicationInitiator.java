@@ -28,26 +28,30 @@ public class CustomApplicationInitiator extends Application {
     public void onCreate() {
         super.onCreate();
         setSslProtocol();
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
         initiateWorkers();
     }
 
     private void initiateWorkers() {
 
-        mWorkManager = WorkManager.getInstance();
+        try {
 
-        OneTimeWorkRequest verifydepositWorkerFirst = new OneTimeWorkRequest.Builder(VerifyDepositWorker.class).build();
-        OneTimeWorkRequest pendingdepositWorkerFirst= new OneTimeWorkRequest.Builder(PendingDepositWorker.class).build();
+            mWorkManager = WorkManager.getInstance();
 
-        PeriodicWorkRequest verifydepositWorker = new PeriodicWorkRequest.Builder(VerifyDepositWorker.class, 20, TimeUnit.MINUTES).build();
-        PeriodicWorkRequest pendingdepositWorker = new PeriodicWorkRequest.Builder(PendingDepositWorker.class, 20, TimeUnit.MINUTES).build();
+            OneTimeWorkRequest verifydepositWorkerFirst = new OneTimeWorkRequest.Builder(VerifyDepositWorker.class).build();
+            OneTimeWorkRequest pendingdepositWorkerFirst = new OneTimeWorkRequest.Builder(PendingDepositWorker.class).build();
 
-        mWorkManager.beginWith(verifydepositWorkerFirst).enqueue();
-        mWorkManager.beginWith(pendingdepositWorkerFirst).enqueue();
+            PeriodicWorkRequest verifydepositWorker = new PeriodicWorkRequest.Builder(VerifyDepositWorker.class, 20, TimeUnit.MINUTES).build();
+            PeriodicWorkRequest pendingdepositWorker = new PeriodicWorkRequest.Builder(PendingDepositWorker.class, 20, TimeUnit.MINUTES).build();
 
-        mWorkManager.enqueueUniquePeriodicWork("VerifyDepositWorker", ExistingPeriodicWorkPolicy.KEEP, verifydepositWorker);
-        mWorkManager.enqueueUniquePeriodicWork("PendingDepositWorker", ExistingPeriodicWorkPolicy.KEEP, pendingdepositWorker);
+            mWorkManager.beginWith(verifydepositWorkerFirst).enqueue();
+            mWorkManager.beginWith(pendingdepositWorkerFirst).enqueue();
+
+            mWorkManager.enqueueUniquePeriodicWork("VerifyDepositWorker", ExistingPeriodicWorkPolicy.KEEP, verifydepositWorker);
+            mWorkManager.enqueueUniquePeriodicWork("PendingDepositWorker", ExistingPeriodicWorkPolicy.KEEP, pendingdepositWorker);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     private void setSslProtocol() {

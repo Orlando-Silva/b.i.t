@@ -17,10 +17,7 @@ import androidx.room.TypeConverters;
                         parentColumns = "Id",
                         childColumns = "UserId",
                         onDelete = ForeignKey.CASCADE),
-                @ForeignKey(entity = User.class,
-                        parentColumns = "Id",
-                        childColumns = "AddressId",
-                        onDelete = ForeignKey.CASCADE) })
+                })
 public class Withdraw {
 
     @PrimaryKey(autoGenerate = true)
@@ -41,8 +38,8 @@ public class Withdraw {
     private int userId;
 
     @NonNull
-    @ColumnInfo(name = "AddressId")
-    private int addressId;
+    @ColumnInfo(name = "To")
+    private String to;
 
     @NonNull
     @ColumnInfo(name = "Confirmations")
@@ -89,12 +86,13 @@ public class Withdraw {
         this.userId = userId;
     }
 
-    public int getAddressId() {
-        return addressId;
+    @NonNull
+    public String getTo() {
+        return to;
     }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
+    public void setTo(@NonNull String to) {
+        this.to = to;
     }
 
     public int getConfirmations() {

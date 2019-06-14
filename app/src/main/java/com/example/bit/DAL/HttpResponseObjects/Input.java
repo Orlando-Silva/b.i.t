@@ -8,7 +8,7 @@ public class Input {
 
     @SerializedName("sequence")
     @Expose
-    private Integer sequence;
+    private Long sequence;
     @SerializedName("witness")
     @Expose
     private String witness;
@@ -19,11 +19,11 @@ public class Input {
     @Expose
     private String script;
 
-    public Integer getSequence() {
+    public Long getSequence() {
         return sequence;
     }
 
-    public void setSequence(Integer sequence) {
+    public void setSequence(Long sequence) {
         this.sequence = sequence;
     }
 

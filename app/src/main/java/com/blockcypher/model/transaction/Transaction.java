@@ -203,4 +203,12 @@ public class Transaction {
     public String getDoubleSpendTx() {
         return doubleSpendTx;
     }
+
+    public void setInputs(List<Input> inputs) {
+        this.inputs = inputs;
+    }
+
+    public void setOutputs(List<Output> outputs) {
+        this.outputs = outputs;
+    }
 }
