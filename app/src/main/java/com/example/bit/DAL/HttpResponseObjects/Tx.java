@@ -12,7 +12,7 @@ public class Tx {
     private Integer ver;
     @SerializedName("inputs")
     @Expose
-    private List<Input> inputs = null;
+    private List<InputCypher> inputs = null;
     @SerializedName("weight")
     @Expose
     private Integer weight;
@@ -61,11 +61,11 @@ public class Tx {
         this.ver = ver;
     }
 
-    public List<Input> getInputs() {
+    public List<InputCypher> getInputs() {
         return inputs;
     }
 
-    public void setInputs(List<Input> inputs) {
+    public void setInputs(List<InputCypher> inputs) {
         this.inputs = inputs;
     }
 

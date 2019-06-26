@@ -63,6 +63,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
                 break;
             case R.id.action_configurations:
+                i = ActionBarFragment.Configuration(this, user);
+                startActivity(i);
                 break;
             case R.id.action_logout:
                 i = ActionBarFragment.Logout(this);

@@ -1,6 +1,7 @@
 package com.example.bit.DAL.Repositories;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.DepositDao;
@@ -20,7 +21,10 @@ import com.example.bit.Helpers.HttpHelpers;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.LiveData;
 
 public class DepositRepository {
@@ -77,16 +81,16 @@ public class DepositRepository {
 
     }
 
-    public void verifyDepositsInBlockchain(Address address) {
+    public void verifyDepositsInBlockchain(Address address, Context context) {
 
         TransactionsByAddress response =  HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/btc/test3/addrs/" +
                 address.getPublicAddress(), new TransactionsByAddress().getClass());
 
-        verifyTransactions(response.getTxrefs(), address);
+        verifyTransactions(response.getTxrefs(), address, context);
 
     }
 
-    private void verifyTransactions(List<Txref> transactions, Address address) {
+    private void verifyTransactions(List<Txref> transactions, Address address, Context context) {
 
         for (Txref transaction: transactions) {
 
@@ -109,14 +113,23 @@ public class DepositRepository {
                         deposit.setCreatedAt(new Date());
                         deposit.setTxId(transaction.getTxHash());
                         deposit.setUserId(address.getUserId());
-
                         mDepositDao.insert(deposit);
+                        showNotification(context, new Random().nextInt(300));
                     }
-
-
                 }
             }
         }
+    }
+
+    private void showNotification(Context context, int id) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "B.I.T")
+                .setContentTitle("Notificação de depósito")
+                .setContentText("Você recebeu um novo depósito!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        notificationManager.notify(id, builder.build());
     }
 
     private float verifyOutputs(List<Output> outputs, Address address) {

@@ -47,6 +47,7 @@
     <string name="btc_symbol">BTC</string>
     <string name="withdraw_button_text">EFETUAR RETIRADA</string>
     <string name="withdraw_address_hint">Endereço de destino</string>
+    <string name="ConfigurationOption">Enviar um email quando efetuar uma retirada</string>
 
 
 </resources>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.R;
+import com.example.bit.View.Activities.ConfigurationActivity;
 import com.example.bit.View.Activities.EditUserActivity;
 import com.example.bit.View.Activities.MainActivity;
 import com.example.bit.View.IntentExtras.Constants;
@@ -55,6 +56,12 @@ public class ActionBarFragment extends androidx.fragment.app.Fragment  {
 
     public static Intent Logout(Context context) {
         Intent i = new Intent(context, MainActivity.class);
+        return i;
+    }
+
+    public static Intent Configuration(Context context, User user) {
+        Intent i = new Intent(context, ConfigurationActivity.class);
+        i.putExtra(Constants.USER_INTENT, user);
         return i;
     }
 }

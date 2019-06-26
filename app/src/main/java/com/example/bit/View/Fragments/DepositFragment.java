@@ -1,5 +1,6 @@
 package com.example.bit.View.Fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,5 +75,4 @@ public class DepositFragment extends androidx.fragment.app.Fragment {
         mbindingContext = DataBindingUtil.inflate(inflater, R.layout.fragment_deposit, container, false);
         return mbindingContext.getRoot();
     }
-
 }

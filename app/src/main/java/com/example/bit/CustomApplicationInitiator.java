@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.StrictMode;
 
 import com.example.bit.Workers.PendingDepositWorker;
+import com.example.bit.Workers.PendingWithdrawWorker;
 import com.example.bit.Workers.VerifyDepositWorker;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -39,15 +40,23 @@ public class CustomApplicationInitiator extends Application {
 
             OneTimeWorkRequest verifydepositWorkerFirst = new OneTimeWorkRequest.Builder(VerifyDepositWorker.class).build();
             OneTimeWorkRequest pendingdepositWorkerFirst = new OneTimeWorkRequest.Builder(PendingDepositWorker.class).build();
+            OneTimeWorkRequest pendingWithdrawWorkerFirst = new OneTimeWorkRequest.Builder(PendingWithdrawWorker.class).build();
+
 
             PeriodicWorkRequest verifydepositWorker = new PeriodicWorkRequest.Builder(VerifyDepositWorker.class, 20, TimeUnit.MINUTES).build();
             PeriodicWorkRequest pendingdepositWorker = new PeriodicWorkRequest.Builder(PendingDepositWorker.class, 20, TimeUnit.MINUTES).build();
+            PeriodicWorkRequest pendingWithdrawWorker = new PeriodicWorkRequest.Builder(PendingWithdrawWorker.class, 20, TimeUnit.MINUTES).build();
+
 
             mWorkManager.beginWith(verifydepositWorkerFirst).enqueue();
             mWorkManager.beginWith(pendingdepositWorkerFirst).enqueue();
+            mWorkManager.beginWith(pendingWithdrawWorkerFirst).enqueue();
+
 
             mWorkManager.enqueueUniquePeriodicWork("VerifyDepositWorker", ExistingPeriodicWorkPolicy.KEEP, verifydepositWorker);
             mWorkManager.enqueueUniquePeriodicWork("PendingDepositWorker", ExistingPeriodicWorkPolicy.KEEP, pendingdepositWorker);
+            mWorkManager.enqueueUniquePeriodicWork("PendingWithdrawWorker", ExistingPeriodicWorkPolicy.KEEP, pendingWithdrawWorker);
+
         }
         catch (Exception exception) {
             exception.printStackTrace();

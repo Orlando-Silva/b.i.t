@@ -12,11 +12,13 @@ import android.os.Build;
 
 import com.example.bit.DAL.Entities.Deposit;
 import com.example.bit.DAL.Repositories.DepositRepository;
+import com.example.bit.R;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.work.ListenableWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
@@ -24,10 +26,12 @@ import androidx.work.WorkerParameters;
 public class PendingDepositWorker extends Worker {
 
     private DepositRepository mDepositRepository;
+    private Context context;
 
     public PendingDepositWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        mDepositRepository = new DepositRepository((Application)context.getApplicationContext());
+        this.context = context;
+        mDepositRepository = new DepositRepository((Application) context.getApplicationContext());
     }
 
     @NonNull
@@ -36,8 +40,7 @@ public class PendingDepositWorker extends Worker {
         try {
             pendingDeposits();
             return ListenableWorker.Result.success();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return ListenableWorker.Result.failure();
         }
     }
@@ -46,13 +49,12 @@ public class PendingDepositWorker extends Worker {
 
         List<Deposit> unconfirmedDeposits = mDepositRepository.getUnconfirmedDeposits();
 
-        if(unconfirmedDeposits == null || unconfirmedDeposits.isEmpty())
+        if (unconfirmedDeposits == null || unconfirmedDeposits.isEmpty())
             return;
 
-        for (Deposit deposit: unconfirmedDeposits) {
+        for (Deposit deposit : unconfirmedDeposits) {
             mDepositRepository.verifyPendingDeposit(deposit);
 
         }
-
     }
 }

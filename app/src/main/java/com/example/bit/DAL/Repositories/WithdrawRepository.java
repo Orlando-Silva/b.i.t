@@ -8,11 +8,15 @@ import com.blockcypher.utils.sign.SignUtils;
 import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.WithdrawDao;
 import com.example.bit.DAL.Entities.Address;
+import com.example.bit.DAL.Entities.Deposit;
 import com.example.bit.DAL.Entities.Withdraw;
 import com.example.bit.DAL.HttpRequestObjects.Input;
 import com.example.bit.DAL.HttpRequestObjects.Output;
 import com.example.bit.DAL.HttpRequestObjects.SendWithdrawFirstStepRequest;
+import com.example.bit.DAL.HttpRequestObjects.SignerRequest;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
+import com.example.bit.DAL.HttpResponseObjects.BlockcypherTransactionResponse;
+import com.example.bit.DAL.HttpResponseObjects.SignerResponse;
 import com.example.bit.DAL.HttpResponseObjects.WithdrawResponse.SendWithdrawFirstStepResponse;
 import com.example.bit.Helpers.HttpHelpers;
 
@@ -60,29 +64,27 @@ public class WithdrawRepository {
         SendWithdrawFirstStepRequest withdrawFirstStep = generateFirstStepObject(userId, amount, to);
         SendWithdrawFirstStepResponse response = requestWithdrawFirstStep(withdrawFirstStep);
 
-
         Address fromAddress = mAddressRepository.getByPublicAddress(withdrawFirstStep.getInputs().get(0).getAddresses().get(0));
-
-        Log.d("Observe", response.toString());
-
-        IntermediaryTransaction transactionToSign = new IntermediaryTransaction();
-        transactionToSign.setTosign(response.getTosign());
 
         List<String> pubkeys = new ArrayList<String>();
         pubkeys.add(fromAddress.getPublicKey());
 
-        transactionToSign.setPubkeys(pubkeys);
-        SignUtils.signWithHexKeyNoPubKey(transactionToSign, fromAddress.getPrivateKey());
+        SignerRequest signerRequest = new SignerRequest();
+        signerRequest.setKey(fromAddress.getPrivateKey());
+        signerRequest.setData(response.getTosign().get(0));
 
-        response.setPubkeys(transactionToSign.getPubkeys());
-        response.setSignatures(transactionToSign.getSignatures());
+        SignerResponse signerResponse = signTransaction(signerRequest);
 
-        Log.d("Observe Signature", response.toString());
+        if(signerResponse == null || signerResponse.getStatusCode() != 200)
+            throw new Exception(signerResponse.getBody());
 
+        String signData = signerResponse.getBody().replace("{\\\"response\\\":\\\"","").replace("\\\"}", "");
+        List<String> toSignData = new ArrayList<String>();
+        toSignData.add(signData);
 
+        response.setTosign(toSignData);
+        response.setPubkeys(pubkeys);
         response = requestWithdrawSecondStep(response);
-
-        Log.d("Observe Final Response", response.toString());
 
         if(response.getErrors() == null) {
 
@@ -102,8 +104,12 @@ public class WithdrawRepository {
         else {
             throw new Exception(response.getErrors().get(0).getError());
         }
+    }
 
-
+    public SignerResponse signTransaction(SignerRequest withdrawSignerRequest) throws Exception {
+        return HttpHelpers.makeSignWithdrawPostRequest("https://cktn9ywch5.execute-api.sa-east-1.amazonaws.com/signer-api",
+                withdrawSignerRequest,
+                new SignerResponse().getClass());
     }
 
     public SendWithdrawFirstStepResponse requestWithdrawSecondStep(SendWithdrawFirstStepResponse withdrawFirstStepResponse) throws Exception {
@@ -118,6 +124,26 @@ public class WithdrawRepository {
                       new SendWithdrawFirstStepResponse().getClass());
     }
 
+    public BlockcypherTransactionResponse getTransaction(String txId) {
+
+        return HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/btc/test3/txs/" + txId + "?limit=5000&includeHex=false",
+                new BlockcypherTransactionResponse().getClass());
+    }
+
+    public void verifyPendingWithdraws(Withdraw withdraw) {
+
+        BlockcypherTransactionResponse response = getTransaction(withdraw.getTxId());
+
+        if(response == null)
+            return;
+        
+        if(response.getConfirmations() > withdraw.getConfirmations()) {
+            withdraw.setConfirmations(response.getConfirmations());
+            mWithdrawDao.update(withdraw);
+        }
+
+    }
+    
     private SendWithdrawFirstStepRequest generateFirstStepObject(int userId, double amount, String to) throws Exception {
         SendWithdrawFirstStepRequest withdrawFirstStep = new SendWithdrawFirstStepRequest();
         withdrawFirstStep.setInputs(setInputs(userId, amount));

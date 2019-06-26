@@ -2,6 +2,8 @@
 package com.example.bit.DAL.HttpResponseObjects.WithdrawResponse;
 
 import java.util.List;
+
+import com.blockcypher.model.transaction.input.Input;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

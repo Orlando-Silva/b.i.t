@@ -45,6 +45,10 @@ public class User implements Serializable {
     @TypeConverters({EnumConverter.class})
     private Status status;
 
+    @NonNull
+    @ColumnInfo(name = "ReceivesEmailOnWithdraw")
+    private boolean receivesEmailOnWithdraw;
+
     public User() {
 
     }
@@ -107,4 +111,11 @@ public class User implements Serializable {
         this.status = status;
     }
 
+    public boolean isReceivesEmailOnWithdraw() {
+        return receivesEmailOnWithdraw;
+    }
+
+    public void setReceivesEmailOnWithdraw(boolean receivesEmailOnWithdraw) {
+        this.receivesEmailOnWithdraw = receivesEmailOnWithdraw;
+    }
 }
