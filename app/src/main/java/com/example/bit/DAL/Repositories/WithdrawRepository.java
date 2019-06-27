@@ -106,7 +106,7 @@ public class WithdrawRepository {
         response.setPubkeys(pubkeys);
         response = requestWithdrawSecondStep(response);
 
-        if(response.getErrors() == null) {
+        if(response.getErrors() == null && response.getTx() != null) {
 
             Withdraw withdraw = new Withdraw();
             withdraw.setAmount(withdrawTotal);

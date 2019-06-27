@@ -25,7 +25,7 @@ public interface WithdrawDao {
     @Query("SELECT * FROM Withdraws WHERE Id = :id LIMIT 1")
     Withdraw get(int id);
 
-    @Query("SELECT * FROM Withdraws")
+    @Query("SELECT * FROM Withdraws ORDER BY ID DESC")
     List<Withdraw> getAll();
 
     @Query("SELECT * FROM Withdraws WHERE UserId = :userId ORDER BY ID DESC")

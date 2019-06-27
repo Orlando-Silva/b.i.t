@@ -25,7 +25,7 @@ public interface DepositDao {
     @Query("SELECT * FROM Deposits WHERE Id = :id LIMIT 1")
     Deposit get(int id);
 
-    @Query("SELECT * FROM Deposits")
+    @Query("SELECT * FROM Deposits ORDER BY ID DESC")
     List<Deposit> getAll();
 
     @Query("SELECT * FROM Deposits WHERE UserId = :userId ORDER BY ID DESC")

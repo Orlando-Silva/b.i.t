@@ -1,6 +1,7 @@
 package com.example.bit.View.Fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.example.bit.DAL.Repositories.UserRepository;
 import com.example.bit.DAL.Repositories.WithdrawRepository;
 import com.example.bit.Helpers.StringHelpers;
 import com.example.bit.R;
+import com.example.bit.View.Activities.WithdrawActivity;
 import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.databinding.FragmentWithdrawBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -70,9 +72,10 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
                         );
 
                         if(withdraw != null) {
+                            DecimalFormat df = new DecimalFormat("#.########");
+
                             if(mUser.isReceivesEmailOnWithdraw()) {
 
-                                DecimalFormat df = new DecimalFormat("#.########");
 
                                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Aviso de retirada");
@@ -82,7 +85,20 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
                                 startActivity(intent);
                             }
 
-                            showMaterialMessage("Aviso", "Retirada efetuada com sucesso");
+                            new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
+                                    .setTitle("Aviso")
+                                    .setMessage("Retirada efetuada com sucesso. Total retirado: " + df.format(withdraw.getAmount()) + " BTC.")
+                                    .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent i = new Intent(getContext(), WithdrawActivity.class);
+                                            i.putExtra(Constants.USER_INTENT, mUser);
+                                            startActivity(i);
+                                            getActivity().finish();
+                                        }
+                                    })
+                                    .create()
+                                    .show();
                         }
 
                     } catch (Exception e) {
