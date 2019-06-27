@@ -2,6 +2,7 @@ package com.example.bit.View.Fragments;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Entities.User;
 import com.example.bit.R;
+import com.example.bit.View.Activities.DepositActivity;
+import com.example.bit.View.Activities.HomeActivity;
 import com.example.bit.View.IntentExtras.Constants;
 import com.example.bit.View.RecycleViewAdapters.AddressAdapter;
 import com.example.bit.View.ViewModels.AddressViewModel;
@@ -107,6 +110,10 @@ public class AddressFragment extends androidx.fragment.app.Fragment {
 
             if (addresses.isEmpty()) {
                 mAddressViewModel.generateFirstAddress(mUser.getId());
+                Intent i = new Intent(getContext(), DepositActivity.class);
+                i.putExtra(Constants.USER_INTENT, mUser);
+                startActivity(i);
+                getActivity().finish();
             }
 
         } catch (Exception e) {

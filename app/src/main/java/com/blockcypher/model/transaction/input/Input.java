@@ -38,4 +38,48 @@ public class Input {
     public void setScriptType(String scriptType) {
         this.scriptType = scriptType;
     }
+
+    public String getPrevHash() {
+        return prevHash;
+    }
+
+    public void setPrevHash(String prevHash) {
+        this.prevHash = prevHash;
+    }
+
+    public Long getOutputIndex() {
+        return outputIndex;
+    }
+
+    public void setOutputIndex(Long outputIndex) {
+        this.outputIndex = outputIndex;
+    }
+
+    public String getScript() {
+        return script;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
+    }
+
+    public BigDecimal getOutputValue() {
+        return outputValue;
+    }
+
+    public void setOutputValue(BigDecimal outputValue) {
+        this.outputValue = outputValue;
+    }
+
+    public List<String> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<String> addresses) {
+        this.addresses = addresses;
+    }
+
+    public String getScriptType() {
+        return scriptType;
+    }
 }

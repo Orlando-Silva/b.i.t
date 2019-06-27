@@ -65,25 +65,34 @@ public class WithdrawRepository {
         SendWithdrawFirstStepRequest withdrawFirstStep = generateFirstStepObject(userId, amount, to);
         SendWithdrawFirstStepResponse response = requestWithdrawFirstStep(withdrawFirstStep);
 
-        Address fromAddress = mAddressRepository.getByPublicAddress(withdrawFirstStep.getInputs().get(0).getAddresses().get(0));
-
-        List<String> pubkeys = new ArrayList<String>();
-        pubkeys.add(fromAddress.getPublicKey());
-
-        SignerRequest signerRequest = new SignerRequest();
-        signerRequest.setKey(fromAddress.getPrivateKey());
-        signerRequest.setData(response.getTosign().get(0));
-
-        SignerResponse signerResponse = signTransaction(signerRequest);
-
-        if(signerResponse == null || signerResponse.getStatusCode() != 200)
-            throw new Exception(signerResponse.getBody());
-
-        String signData = signerResponse.getBody().replace("{\\\"response\\\":\\\"","").replace("\\\"}", "");
         List<String> toSignData = new ArrayList<String>();
-        toSignData.add(signData);
+        List<String> pubkeys = new ArrayList<String>();
 
-        response.setTosign(toSignData);
+        int i = 0;
+
+        for (com.blockcypher.model.transaction.input.Input input :response.getTx().getInputs()) {
+
+
+            Address fromAddress = mAddressRepository.getByPublicAddress(input.getAddresses().get(0));
+
+            pubkeys.add(fromAddress.getPublicKey());
+
+            SignerRequest signerRequest = new SignerRequest();
+            signerRequest.setKey(fromAddress.getPrivateKey());
+            signerRequest.setData(response.getTosign().get(i));
+
+            SignerResponse signerResponse = signTransaction(signerRequest);
+
+            if(signerResponse == null || signerResponse.getStatusCode() != 200)
+                throw new Exception(signerResponse.getBody());
+
+            String signData = signerResponse.getBody().replace("{\"response\":\"","").replace("\"}", "");
+            toSignData.add(signData);
+            i++;
+        }
+
+
+        response.setSignatures(toSignData);
         response.setPubkeys(pubkeys);
         response = requestWithdrawSecondStep(response);
 
