@@ -16,6 +16,7 @@ import com.example.bit.DAL.HttpRequestObjects.SendWithdrawFirstStepRequest;
 import com.example.bit.DAL.HttpRequestObjects.SignerRequest;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockcypherTransactionResponse;
+import com.example.bit.DAL.HttpResponseObjects.Deposit.TransactionsByAddress;
 import com.example.bit.DAL.HttpResponseObjects.SignerResponse;
 import com.example.bit.DAL.HttpResponseObjects.WithdrawResponse.SendWithdrawFirstStepResponse;
 import com.example.bit.Helpers.HttpHelpers;
@@ -113,20 +114,20 @@ public class WithdrawRepository {
     }
 
     public SendWithdrawFirstStepResponse requestWithdrawSecondStep(SendWithdrawFirstStepResponse withdrawFirstStepResponse) throws Exception {
-        return HttpHelpers.makeSecondStepWithdrawPostRequest("https://api.blockcypher.com/v1/btc/test3/txs/send",
+        return HttpHelpers.makeSecondStepWithdrawPostRequest("https://api.blockcypher.com/v1/bcy/test/txs/send",
                 withdrawFirstStepResponse,
                 new SendWithdrawFirstStepResponse().getClass());
     }
 
     public SendWithdrawFirstStepResponse requestWithdrawFirstStep(SendWithdrawFirstStepRequest withdrawFirstStepRequest) throws Exception {
-              return HttpHelpers.makeWithdrawPostRequest("https://api.blockcypher.com/v1/btc/test3/txs/new",
+              return HttpHelpers.makeWithdrawPostRequest("https://api.blockcypher.com/v1/bcy/test/txs/new",
                       withdrawFirstStepRequest,
                       new SendWithdrawFirstStepResponse().getClass());
     }
 
     public BlockcypherTransactionResponse getTransaction(String txId) {
 
-        return HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/btc/test3/txs/" + txId + "?limit=5000&includeHex=false",
+        return HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/bcy/test/txs/" + txId + "?limit=5000&includeHex=false",
                 new BlockcypherTransactionResponse().getClass());
     }
 
@@ -211,13 +212,13 @@ public class WithdrawRepository {
     }
 
     private double getAddressBalance(Address address) {
-        BlockchainRawAddressResponse rawAddress =  mAddressRepository.getAddressInBlockchain(address.getPublicAddress());
+        TransactionsByAddress rawAddress =  mAddressRepository.getAddressInBlockchain(address.getPublicAddress());
 
         if(rawAddress == null){
             return 0;
         }
         else {
-            return rawAddress.getFinalBalance() / Double.parseDouble(100000000 + "");
+            return rawAddress.getBalance() / Double.parseDouble(100000000 + "");
         }
     }
 }

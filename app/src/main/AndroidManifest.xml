@@ -27,7 +27,7 @@
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="com.example.bit.workmanager-init"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".View.Activities.EditUserActivity"

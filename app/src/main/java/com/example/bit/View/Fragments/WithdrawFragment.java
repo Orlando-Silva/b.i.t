@@ -1,6 +1,8 @@
 package com.example.bit.View.Fragments;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -39,7 +41,6 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
         bindRepositories();
         setWithdrawListnerHandler();
         displayBalance();
-        mWithdrawRepository.deleteAll();
         return view;
     }
 
@@ -69,6 +70,18 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
                         );
 
                         if(withdraw != null) {
+                            if(mUser.isReceivesEmailOnWithdraw()) {
+
+                                DecimalFormat df = new DecimalFormat("#.########");
+
+                                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Aviso de retirada");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Olá, tudo bem? uma retirada de " + df.format(withdraw.getAmount()) + " BTC foi efetuada da sua conta. Hash da transação:" +  withdraw.getTxId());
+                                intent.setData(Uri.parse("mailto:" + mUser.getEmail()));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+
                             showMaterialMessage("Aviso", "Retirada efetuada com sucesso");
                         }
 

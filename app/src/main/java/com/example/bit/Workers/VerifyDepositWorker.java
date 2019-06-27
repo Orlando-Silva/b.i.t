@@ -24,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 public class VerifyDepositWorker extends Worker {
 
@@ -32,24 +31,21 @@ public class VerifyDepositWorker extends Worker {
     private AddressRepository mAddressRepository;
     private Context mContext;
 
-    public VerifyDepositWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
-        super(context, workerParams);
-        mContext = context;
-        mDepositRepository = new DepositRepository((Application)context.getApplicationContext());
-        mAddressRepository = new AddressRepository((Application)context.getApplicationContext());
-    }
-
     @NonNull
     @Override
     public Result doWork() {
         try {
+            Context applicationContext = getApplicationContext();
+            mContext = applicationContext;
+            mDepositRepository = new DepositRepository((Application)mContext.getApplicationContext());
+            mAddressRepository = new AddressRepository((Application)mContext.getApplicationContext());
 
             verifyDeposits();
-            return Result.success();
+            return Result.SUCCESS;
         }
         catch (Exception exception) {
             exception.printStackTrace();
-            return Result.failure();
+            return Result.FAILURE;
         }
     }
 

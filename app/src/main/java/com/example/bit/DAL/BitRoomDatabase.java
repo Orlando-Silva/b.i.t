@@ -15,7 +15,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {User.class, Address.class, Deposit.class, Withdraw.class}, version = 12,exportSchema = false)
+@Database(entities = {User.class, Address.class, Deposit.class, Withdraw.class}, version = 13,exportSchema = false)
 public abstract class BitRoomDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();

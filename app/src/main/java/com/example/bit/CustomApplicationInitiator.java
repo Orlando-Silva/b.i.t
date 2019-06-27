@@ -28,8 +28,8 @@ public class CustomApplicationInitiator extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        setSslProtocol();
         initiateWorkers();
+        setSslProtocol();
     }
 
     private void initiateWorkers() {

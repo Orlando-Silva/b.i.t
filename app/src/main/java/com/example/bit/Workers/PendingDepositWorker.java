@@ -19,29 +19,25 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.work.ListenableWorker;
 import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 public class PendingDepositWorker extends Worker {
 
     private DepositRepository mDepositRepository;
     private Context context;
 
-    public PendingDepositWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
-        super(context, workerParams);
-        this.context = context;
-        mDepositRepository = new DepositRepository((Application) context.getApplicationContext());
-    }
-
     @NonNull
     @Override
-    public ListenableWorker.Result doWork() {
+    public Result doWork() {
         try {
+            Context applicationContext = getApplicationContext();
+            this.context = applicationContext;
+            mDepositRepository = new DepositRepository((Application) context.getApplicationContext());
+
             pendingDeposits();
-            return ListenableWorker.Result.success();
+            return Result.SUCCESS;
         } catch (Exception exception) {
-            return ListenableWorker.Result.failure();
+            return Result.FAILURE;
         }
     }
 

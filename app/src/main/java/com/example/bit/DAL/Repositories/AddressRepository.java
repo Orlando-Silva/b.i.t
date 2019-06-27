@@ -8,6 +8,7 @@ import com.example.bit.DAL.Entities.Address;
 import com.example.bit.DAL.Enums.Status;
 import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockcypherCreateAddressResponse;
+import com.example.bit.DAL.HttpResponseObjects.Deposit.TransactionsByAddress;
 import com.example.bit.Helpers.HttpHelpers;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class AddressRepository {
     }
 
     public Address generateAddress(int userId) throws Exception {
-        BlockcypherCreateAddressResponse response =  HttpHelpers.makePostRequest(" https://api.blockcypher.com/v1/btc/test3/addrs",
+        BlockcypherCreateAddressResponse response =  HttpHelpers.makePostRequest(" https://api.blockcypher.com/v1/bcy/test/addrs",
                 null, new BlockcypherCreateAddressResponse().getClass());
 
         if(response == null) {
@@ -85,9 +86,10 @@ public class AddressRepository {
         return mAddressDao.get(addressId);
     }
 
-    public BlockchainRawAddressResponse getAddressInBlockchain(String address) {
-        return HttpHelpers.makeGetRequest("https://testnet.blockchain.info/rawaddr/" +
-                address, new BlockchainRawAddressResponse().getClass());
+    public TransactionsByAddress getAddressInBlockchain(String address) {
+            return  HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/bcy/test/addrs/" +
+                address, new TransactionsByAddress().getClass());
+
     }
 
 

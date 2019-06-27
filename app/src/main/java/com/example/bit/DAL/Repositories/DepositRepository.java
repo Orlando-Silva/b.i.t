@@ -1,7 +1,10 @@
 package com.example.bit.DAL.Repositories;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 
 import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.DepositDao;
@@ -18,6 +21,7 @@ import com.example.bit.DAL.HttpResponseObjects.Out;
 import com.example.bit.DAL.HttpResponseObjects.Output;
 import com.example.bit.DAL.HttpResponseObjects.Tx;
 import com.example.bit.Helpers.HttpHelpers;
+import com.example.bit.R;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +30,8 @@ import java.util.Random;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.LiveData;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class DepositRepository {
 
@@ -62,7 +68,7 @@ public class DepositRepository {
 
     public BlockcypherTransactionResponse getTransaction(String txId) {
 
-        return HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/btc/test3/txs/" + txId + "?limit=5000&includeHex=false",
+        return HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/bcy/test/txs/" + txId + "?limit=5000&includeHex=false",
                 new BlockcypherTransactionResponse().getClass());
     }
 
@@ -83,7 +89,7 @@ public class DepositRepository {
 
     public void verifyDepositsInBlockchain(Address address, Context context) {
 
-        TransactionsByAddress response =  HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/btc/test3/addrs/" +
+        TransactionsByAddress response =  HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/bcy/test/addrs/" +
                 address.getPublicAddress(), new TransactionsByAddress().getClass());
 
         verifyTransactions(response.getTxrefs(), address, context);
@@ -122,15 +128,32 @@ public class DepositRepository {
     }
 
     private void showNotification(Context context, int id) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "B.I.T")
+        createNotificationChannel(context);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "BITChannel")
                 .setContentTitle("Notificação de depósito")
                 .setContentText("Você recebeu um novo depósito!")
+                .setSmallIcon(R.drawable.bitcoinlogo)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         notificationManager.notify(id, builder.build());
     }
+
+    private void createNotificationChannel(Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "BITChannel";
+            String description = "Channel for sending deposit information";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("BITChannel", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(context, NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
     private float verifyOutputs(List<Output> outputs, Address address) {
 
