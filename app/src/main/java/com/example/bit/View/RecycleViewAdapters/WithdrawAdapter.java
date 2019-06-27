@@ -10,6 +10,7 @@ import com.example.bit.DAL.Entities.Withdraw;
 import com.example.bit.DAL.Repositories.AddressRepository;
 import com.example.bit.R;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -65,6 +66,20 @@ public class WithdrawAdapter extends RecyclerView.Adapter<WithdrawAdapter.Withdr
 
         DecimalFormat decimalFormat = new DecimalFormat("#.########");
         holder.amountReceived.setText(decimalFormat.format(mWithdraws.get(position).getAmount()) + " BTC");
+
+        holder.amountReceived.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Application application = (Application) v.getContext().getApplicationContext();
+
+                new MaterialAlertDialogBuilder(v.getContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
+                        .setTitle("Retirada")
+                        .setMessage("Transação " + (mWithdraws.get(position).getConfirmations() > 6 ? "confirmada" : "pendente") + ". Hash da transação: " + mWithdraws.get(position).getTxId())
+                        .setPositiveButton("Ok", null)
+                        .create()
+                        .show();
+            }
+        });
 
     }
 

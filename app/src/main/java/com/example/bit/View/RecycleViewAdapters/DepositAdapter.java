@@ -13,6 +13,7 @@ import com.example.bit.DAL.Repositories.AddressRepository;
 import com.example.bit.DAL.Repositories.DepositRepository;
 import com.example.bit.R;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -69,6 +70,20 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.DepositV
 
         DecimalFormat decimalFormat = new DecimalFormat("#.########");
         holder.amountReceived.setText(decimalFormat.format(mDeposits.get(position).getAmount()) + " BTC");
+
+        holder.amountReceived.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Application application = (Application) v.getContext().getApplicationContext();
+
+                new MaterialAlertDialogBuilder(v.getContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
+                        .setTitle("Retirada")
+                        .setMessage("Transação " + (mDeposits.get(position).getConfirmations() > 6 ? "confirmada" : "pendente") + ". Hash da transação: " + mDeposits.get(position).getTxId())
+                        .setPositiveButton("Ok", null)
+                        .create()
+                        .show();
+            }
+        });
 
     }
 

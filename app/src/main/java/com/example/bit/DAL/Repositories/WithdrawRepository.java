@@ -1,27 +1,22 @@
 package com.example.bit.DAL.Repositories;
 
 import android.app.Application;
-import android.util.Log;
 
-import com.blockcypher.model.transaction.intermediary.IntermediaryTransaction;
-import com.blockcypher.utils.sign.SignUtils;
 import com.example.bit.DAL.BitRoomDatabase;
 import com.example.bit.DAL.DAO.WithdrawDao;
 import com.example.bit.DAL.Entities.Address;
-import com.example.bit.DAL.Entities.Deposit;
 import com.example.bit.DAL.Entities.Withdraw;
 import com.example.bit.DAL.HttpRequestObjects.Input;
 import com.example.bit.DAL.HttpRequestObjects.Output;
 import com.example.bit.DAL.HttpRequestObjects.SendWithdrawFirstStepRequest;
 import com.example.bit.DAL.HttpRequestObjects.SignerRequest;
-import com.example.bit.DAL.HttpResponseObjects.BlockchainRawAddressResponse;
 import com.example.bit.DAL.HttpResponseObjects.BlockcypherTransactionResponse;
 import com.example.bit.DAL.HttpResponseObjects.Deposit.TransactionsByAddress;
 import com.example.bit.DAL.HttpResponseObjects.SignerResponse;
 import com.example.bit.DAL.HttpResponseObjects.WithdrawResponse.SendWithdrawFirstStepResponse;
 import com.example.bit.Helpers.HttpHelpers;
 
-import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +25,6 @@ import androidx.lifecycle.LiveData;
 
 public class WithdrawRepository {
 
-    public final double WITHDRAW_FEE = 0.0004;
     private WithdrawDao mWithdrawDao;
     private AddressRepository mAddressRepository;
 
@@ -60,10 +54,26 @@ public class WithdrawRepository {
 
     public void update(Withdraw withdraw) { mWithdrawDao.update(withdraw); }
 
-    public Withdraw makeWithdraw(int userId, double amount,String to) throws Exception {
+    public Withdraw makeWithdraw(int userId, double amount,String to, double currentUserBalance) throws Exception {
 
         SendWithdrawFirstStepRequest withdrawFirstStep = generateFirstStepObject(userId, amount, to);
         SendWithdrawFirstStepResponse response = requestWithdrawFirstStep(withdrawFirstStep);
+
+        double withdrawTotal = 0;
+        double fee = 0;
+
+        for (com.example.bit.DAL.HttpResponseObjects.WithdrawResponse.Output output: response.getTx().getOutputs()) {
+            withdrawTotal += output.getValue() / Double.parseDouble(100000000 + "");
+        }
+
+        fee = response.getTx().getFees() / Double.parseDouble(100000000 + "");
+        withdrawTotal +=  fee;
+
+        if(withdrawTotal > currentUserBalance) {
+            DecimalFormat df = new DecimalFormat("#.########");
+            throw new WithdrawException("Para fazer a retirada de " + df.format(amount) + " BTC é necessário ter, em conta " + df.format(withdrawTotal - amount) + " BTC por causa da taxa de rede!");
+        }
+
 
         List<String> toSignData = new ArrayList<String>();
         List<String> pubkeys = new ArrayList<String>();
@@ -99,13 +109,13 @@ public class WithdrawRepository {
         if(response.getErrors() == null) {
 
             Withdraw withdraw = new Withdraw();
-            withdraw.setAmount(amount);
+            withdraw.setAmount(withdrawTotal);
             withdraw.setTo(to);
             withdraw.setConfirmations(response.getTx().getConfirmations());
             withdraw.setTxId(response.getTx().getHash());
             withdraw.setUserId(userId);
             withdraw.setCreatedAt(new Date());
-            withdraw.setFee(WITHDRAW_FEE);
+            withdraw.setFee(fee);
 
             insert(withdraw);
 
@@ -230,4 +240,12 @@ public class WithdrawRepository {
             return rawAddress.getBalance() / Double.parseDouble(100000000 + "");
         }
     }
+
+    public class  WithdrawException extends Exception {
+
+        public WithdrawException(String message) {
+            super(message);
+        }
+    }
+
 }

@@ -48,7 +48,6 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
         double balance = mUserRepository.getBalance(mUser.getId());
         DecimalFormat df = new DecimalFormat("#.########");
         mbindingContext.currentBalance.setText("Saldo atual: " + df.format(balance));
-        mbindingContext.currentFee.setText("Fee atual: " + df.format(mWithdrawRepository.WITHDRAW_FEE));
     }
 
     private void bindRepositories() {
@@ -66,7 +65,8 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
                         withdraw = mWithdrawRepository.makeWithdraw (
                                 mUser.getId(),
                                 Double.parseDouble(mbindingContext.tvWithdrawAmount.getEditText().getText().toString()),
-                                mbindingContext.tvDestinationAddress.getEditText().getText().toString()
+                                mbindingContext.tvDestinationAddress.getEditText().getText().toString(),
+                                mUserRepository.getBalance(mUser.getId())
                         );
 
                         if(withdraw != null) {
@@ -108,11 +108,6 @@ public class WithdrawFragment extends androidx.fragment.app.Fragment {
         }
 
         double balance = mUserRepository.getBalance(mUser.getId());
-
-        if(balance < (Double.parseDouble(mbindingContext.tvWithdrawAmount.getEditText().getText().toString()) + mWithdrawRepository.WITHDRAW_FEE)) {
-            showMaterialMessage("Aviso", "Saldo insuficiente!");
-            return false;
-        }
 
         return true;
     }

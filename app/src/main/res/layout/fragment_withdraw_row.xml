@@ -26,7 +26,6 @@
                 android:layout_marginEnd="15dp"
                 android:layout_width="165dp"
                 android:layout_height="match_parent"
-                app:chipIcon="@drawable/check_circle"
                 android:text="12/12/2019 22:10"/>
 
 
