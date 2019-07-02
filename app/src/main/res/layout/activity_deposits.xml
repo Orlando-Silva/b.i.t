@@ -10,7 +10,7 @@
             android:id="@+id/actionBarFragment"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:name="com.example.bit.View.Fragments.ActionBarFragment"
+            android:name="com.app.bit.View.Fragments.ActionBarFragment"
             tools:layout="@layout/fragment_action_bar">
         </fragment>
 
@@ -37,7 +37,7 @@
                     android:id="@+id/addressFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:name="com.example.bit.View.Fragments.AddressFragment"
+                    android:name="com.app.bit.View.Fragments.AddressFragment"
                     tools:layout="@layout/fragment_address">
                 </fragment>
 
@@ -45,7 +45,7 @@
                     android:id="@+id/depositFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:name="com.example.bit.View.Fragments.DepositFragment"
+                    android:name="com.app.bit.View.Fragments.DepositFragment"
                     tools:layout="@layout/fragment_deposit">
                 </fragment>
 
@@ -63,7 +63,7 @@
                 android:id="@+id/menuFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.example.bit.View.Fragments.MenuFragment"
+                android:name="com.app.bit.View.Fragments.MenuFragment"
                 tools:layout="@layout/fragment_menu">
             </fragment>
 

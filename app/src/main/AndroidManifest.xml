@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.bit">
+    package="com.app.bit">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,33 +14,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity android:name=".View.Activities.ConfigurationActivity"></activity>
+        <activity android:name="com.app.bit.View.Activities.ConfigurationActivity"></activity>
         <activity
-            android:name=".View.Activities.WithdrawActivity"
+            android:name="com.app.bit.View.Activities.WithdrawActivity"
             android:label="@string/title_activity_withdraw" />
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.CustomApplicationInitiator"
+            android:enabled="true"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="com.example.bit.workmanager-init"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
-            android:name=".View.Activities.EditUserActivity"
+            android:name="com.app.bit.View.Activities.EditUserActivity"
             android:label="@string/title_activity_edit_user" />
         <activity
-            android:name=".View.Activities.DepositActivity"
+            android:name="com.app.bit.View.Activities.DepositActivity"
             android:label="@string/title_activity_deposits" />
         <activity
-            android:name=".View.Activities.HomeActivity"
+            android:name="com.app.bit.View.Activities.HomeActivity"
             android:label="@string/title_activity_home" />
-        <activity android:name=".View.Activities.RegisterUserSecondStepActivity" />
-        <activity android:name=".View.Activities.RegisterUserActivity" />
-        <activity android:name=".View.Activities.MainActivity">
+        <activity android:name="com.app.bit.View.Activities.RegisterUserSecondStepActivity" />
+        <activity android:name="com.app.bit.View.Activities.RegisterUserActivity" />
+        <activity android:name="com.app.bit.View.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
