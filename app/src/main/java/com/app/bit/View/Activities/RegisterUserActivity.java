@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.app.bit.DAL.Entities.User;
+import com.app.bit.DAL.Repositories.UserRepository;
 import com.app.bit.Helpers.StringHelpers;
 import com.app.bit.R;
 import com.app.bit.View.IntentExtras.Constants;
@@ -19,11 +20,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 public class RegisterUserActivity extends AppCompatActivity {
 
     ActivityRegisterUserBinding bindingContent;
+    UserRepository mUserRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindingContent = DataBindingUtil.setContentView(this, R.layout.activity_register_user);
+        mUserRepository = new UserRepository(getApplication());
 
         bindingContent.btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,11 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         if(bindingContent.tvLogin.getEditText().getText() == null || StringHelpers.isNullEmptyOrWhitespace(bindingContent.tvLogin.getEditText().getText().toString())) {
             showMaterialMessage("Aviso", "O login não pode ser nulo!");
+            return false;
+        }
+
+        if(mUserRepository.getByLogin(bindingContent.tvLogin.getEditText().getText().toString()) != null) {
+            showMaterialMessage("Aviso", "Já existe um usuário com este login!");
             return false;
         }
 

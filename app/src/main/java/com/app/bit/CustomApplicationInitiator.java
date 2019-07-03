@@ -1,6 +1,11 @@
 package com.app.bit;
 
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.os.Build;
+import android.util.Log;
 
 import com.app.bit.Workers.PendingDepositWorker;
 import com.app.bit.Workers.PendingWithdrawWorker;
@@ -11,54 +16,83 @@ import com.google.android.gms.security.ProviderInstaller;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
+import androidx.annotation.RequiresApi;
 import androidx.work.WorkManager;
 
-public class CustomApplicationInitiator extends Application {
+public class CustomApplicationInitiator extends Application  {
 
     private WorkManager mWorkManager;
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onCreate() {
         super.onCreate();
-        initiateWorkers();
+        initiateServices();
         setSslProtocol();
     }
 
-    private void initiateWorkers() {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void initiateServices() {
 
-        try {
+        StartVerifyDeposit();
+        StartPendingDeposit();
+        StartPendingWithdraw();
+    }
 
-            mWorkManager = WorkManager.getInstance();
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void StartVerifyDeposit() {
+        ComponentName componentName = new ComponentName(this, VerifyDepositWorker.class);
+        JobInfo jobInfo = new JobInfo.Builder(12, componentName)
+                .setBackoffCriteria(5000, JobInfo.BACKOFF_POLICY_LINEAR)
+                .setMinimumLatency(30000)
+                .build();
 
-            OneTimeWorkRequest verifydepositWorkerFirst = new OneTimeWorkRequest.Builder(VerifyDepositWorker.class).build();
-            OneTimeWorkRequest pendingdepositWorkerFirst = new OneTimeWorkRequest.Builder(PendingDepositWorker.class).build();
-            OneTimeWorkRequest pendingWithdrawWorkerFirst = new OneTimeWorkRequest.Builder(PendingWithdrawWorker.class).build();
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(jobInfo);
 
-
-            PeriodicWorkRequest verifydepositWorker = new PeriodicWorkRequest.Builder(VerifyDepositWorker.class, 20, TimeUnit.MINUTES).build();
-            PeriodicWorkRequest pendingdepositWorker = new PeriodicWorkRequest.Builder(PendingDepositWorker.class, 20, TimeUnit.MINUTES).build();
-            PeriodicWorkRequest pendingWithdrawWorker = new PeriodicWorkRequest.Builder(PendingWithdrawWorker.class, 20, TimeUnit.MINUTES).build();
-
-
-            mWorkManager.beginWith(verifydepositWorkerFirst).enqueue();
-            mWorkManager.beginWith(pendingdepositWorkerFirst).enqueue();
-            mWorkManager.beginWith(pendingWithdrawWorkerFirst).enqueue();
-
-
-            mWorkManager.enqueueUniquePeriodicWork("VerifyDepositWorker", ExistingPeriodicWorkPolicy.KEEP, verifydepositWorker);
-            mWorkManager.enqueueUniquePeriodicWork("PendingDepositWorker", ExistingPeriodicWorkPolicy.KEEP, pendingdepositWorker);
-            mWorkManager.enqueueUniquePeriodicWork("PendingWithdrawWorker", ExistingPeriodicWorkPolicy.KEEP, pendingWithdrawWorker);
-
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("Test", "Verify Deposit Job scheduled!");
+        } else {
+            Log.d("Test", "Verify Deposit Job not scheduled");
         }
-        catch (Exception exception) {
-            exception.printStackTrace();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void StartPendingDeposit() {
+        ComponentName componentName = new ComponentName(this, PendingDepositWorker.class);
+        JobInfo jobInfo = new JobInfo.Builder(13, componentName)
+                .setBackoffCriteria(5000, JobInfo.BACKOFF_POLICY_LINEAR)
+                .setMinimumLatency(30000)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(jobInfo);
+
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("Test", "Pending Deposit Job scheduled!");
+        } else {
+            Log.d("Test", "Pending Deposit Job not scheduled");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void StartPendingWithdraw() {
+        ComponentName componentName = new ComponentName(this, PendingWithdrawWorker.class);
+        JobInfo jobInfo = new JobInfo.Builder(14, componentName)
+                .setBackoffCriteria(5000, JobInfo.BACKOFF_POLICY_LINEAR)
+                .setMinimumLatency(30000)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(jobInfo);
+
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("Test", "Pending Withdraw Job scheduled!");
+        } else {
+            Log.d("Test", "Pending Withdraw Job not scheduled");
         }
     }
 

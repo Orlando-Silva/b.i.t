@@ -24,6 +24,8 @@ public class UserRepository {
 
     public void update(User user) { mUserDao.update(user); }
 
+    public User getByLogin(String login) { return mUserDao.getByLogin(login); }
+
     public User get(int id) {
         return mUserDao.get(id);
     }

@@ -1,35 +1,74 @@
 package com.app.bit.Workers;
 
 import android.app.Application;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.content.Context;
+import android.os.Build;
+import android.util.Log;
 
 import com.app.bit.DAL.Entities.Deposit;
 import com.app.bit.DAL.Repositories.DepositRepository;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.work.Worker;
+import androidx.annotation.RequiresApi;
 
-public class PendingDepositWorker extends Worker {
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+public class PendingDepositWorker extends JobService {
 
     private DepositRepository mDepositRepository;
     private Context context;
 
-    @NonNull
+    private boolean isWorking = false;
+    private boolean jobCancelled = false;
+
+
     @Override
-    public Result doWork() {
+    public boolean onStartJob(JobParameters jobParameters) {
+        Log.d("Test", "Pending Deposit Job started!");
+        isWorking = true;
+        startWorkOnNewThread(jobParameters);
+        return isWorking;
+    }
+
+    private void startWorkOnNewThread(final JobParameters jobParameters) {
+        new Thread(new Runnable() {
+            public void run() {
+                doWork(jobParameters);
+            }
+        }).start();
+    }
+
+    private void doWork(JobParameters jobParameters) {
+
+        if (jobCancelled)
+            return;
+
         try {
-            /*
             Context applicationContext = getApplicationContext();
             this.context = applicationContext;
             mDepositRepository = new DepositRepository((Application) context.getApplicationContext());
             pendingDeposits();
-            */
-            return Result.SUCCESS;
-        } catch (Exception exception) {
-            return Result.FAILURE;
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Log.d("Test", "Job finished!");
+        isWorking = false;
+        boolean needsReschedule = false;
+        jobFinished(jobParameters, needsReschedule);
+    }
+
+    @Override
+    public boolean onStopJob(JobParameters jobParameters) {
+        Log.d("Test", "Job cancelled before being completed.");
+        jobCancelled = true;
+        boolean needsReschedule = isWorking;
+        jobFinished(jobParameters, needsReschedule);
+        return needsReschedule;
     }
 
     public void pendingDeposits() {

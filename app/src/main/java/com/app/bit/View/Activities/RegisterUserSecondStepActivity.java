@@ -39,6 +39,7 @@ public class RegisterUserSecondStepActivity extends AppCompatActivity {
         if(argsIsValid()) {
             UserRepository userRepository = new UserRepository(getApplication());
             user = userRepository.insertUser(user, bindingContent.tvPassword.getEditText().getText().toString());
+            user = userRepository.getByLogin(user.getLogin());
             Intent i = new Intent(RegisterUserSecondStepActivity.this, HomeActivity.class);
             i.putExtra(Constants.USER_INTENT, user);
             startActivity(i);

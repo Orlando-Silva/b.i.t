@@ -33,6 +33,8 @@ public interface UserDao {
     @Query("SELECT * FROM Users WHERE Login = :login AND Password = :password LIMIT 1")
     User getByLoginAndPassword(String login, byte[] password);
 
+    @Query("SELECT * FROM Users WHERE Login = :login LIMIT 1")
+    User getByLogin(String login);
 
     // TODO: Fix Deposit with confirmations < 7
     @Query("SELECT SUM(balance) FROM ( SELECT UserId, SUM(Amount) as balance FROM Deposits WHERE Confirmations > 1 AND UserId = :userId GROUP BY UserId UNION ALL SELECT UserId, -(SUM(Amount)) as balance FROM Withdraws WHERE UserId = :userId GROUP BY UserId)")

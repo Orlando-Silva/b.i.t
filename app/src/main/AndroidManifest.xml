@@ -19,11 +19,23 @@
             android:name="com.app.bit.View.Activities.WithdrawActivity"
             android:label="@string/title_activity_withdraw" />
 
-        <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.CustomApplicationInitiator"
-            android:enabled="true"
-            android:exported="true" />
+        <service
+            android:name=".Workers.VerifyDepositWorker"
+            android:label="Verify Deposits Worker"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
+
+        <service
+            android:name=".Workers.PendingDepositWorker"
+            android:label="Pending Deposits Worker"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
+
+        <service
+            android:name=".Workers.PendingWithdrawWorker"
+            android:label="Pending Withdraw Worker"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
 
         <meta-data
             android:name="com.google.android.gms.version"

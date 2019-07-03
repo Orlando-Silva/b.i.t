@@ -86,8 +86,9 @@ public class DepositRepository {
         TransactionsByAddress response =  HttpHelpers.makeGetRequest("https://api.blockcypher.com/v1/bcy/test/addrs/" +
                 address.getPublicAddress(), new TransactionsByAddress().getClass());
 
-        verifyTransactions(response.getTxrefs(), address, context);
-
+        if(response != null && response.getTxrefs() != null) {
+            verifyTransactions(response.getTxrefs(), address, context);
+        }
     }
 
     private void verifyTransactions(List<Txref> transactions, Address address, Context context) {
@@ -100,21 +101,24 @@ public class DepositRepository {
 
                 BlockcypherTransactionResponse transactionResponse = getTransaction(transaction.getTxHash());
 
-                double transactionTotal = verifyOutputs(transactionResponse.getOutputs(), address);
+                if(transactionResponse != null) {
 
-                if(transactionTotal > 0)  {
+                    double transactionTotal = verifyOutputs(transactionResponse.getOutputs(), address);
 
-                    if(transactionResponse != null) {
+                    if (transactionTotal > 0) {
 
-                        Deposit deposit = new Deposit();
-                        deposit.setAmount(transactionTotal);
-                        deposit.setAddressId(address.getId());
-                        deposit.setConfirmations(transactionResponse.getConfirmations());
-                        deposit.setCreatedAt(new Date());
-                        deposit.setTxId(transaction.getTxHash());
-                        deposit.setUserId(address.getUserId());
-                        mDepositDao.insert(deposit);
-                        showNotification(context, new Random().nextInt(300));
+                        if (transactionResponse != null) {
+
+                            Deposit deposit = new Deposit();
+                            deposit.setAmount(transactionTotal);
+                            deposit.setAddressId(address.getId());
+                            deposit.setConfirmations(transactionResponse.getConfirmations());
+                            deposit.setCreatedAt(new Date());
+                            deposit.setTxId(transaction.getTxHash());
+                            deposit.setUserId(address.getUserId());
+                            mDepositDao.insert(deposit);
+                            showNotification(context, new Random().nextInt(300));
+                        }
                     }
                 }
             }
